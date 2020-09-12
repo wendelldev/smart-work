@@ -1,0 +1,40 @@
+
+<ion-content>
+  <img #lightblue class="light-blue" src="/assets/shape-light-blue.svg" alt="">
+  <img #strongblue class="strong-blue" src="/assets/shape-strong-blue.svg" alt="">
+
+  <div class="logo">
+    <img #logo src="/assets/logo.svg" alt="">
+    <h3 #wrapper class="wrapper">Seja bem vindo ao SmartWork!</h3>
+  </div>
+
+
+  <form class="login-form" novalidate>
+
+    <ion-item lines="none" class="styled">
+      <ion-icon slot="start" name="person-outline"></ion-icon>
+      <ion-input type="email" placeholder="Email"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" class="styled">
+      <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+      <ion-input type="password" placeholder="Senha"></ion-input>
+    </ion-item>
+
+    <ion-button
+      color="light"
+      expand="block"
+      class="login-button"
+    >
+      Login
+      <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+    </ion-button>
+  </form>
+
+  <div class="footer-box">
+    <p class="forgot-password">Esqueci minha senha</p>
+    <p class="text-registry">Não possui conta?</p>
+    <p class="registry">Registre-se</p>
+  </div>
+
+</ion-content>

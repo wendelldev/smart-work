@@ -24,3 +24,42 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+.light-blue, .strong-blue {
+    position: fixed;
+    left: 0;
+    top: 250px;
+}
+
+.strong-blue {
+    top: 98px;
+    left: -2px;
+}
+
+
+@media (max-height: 568px) {
+    .light-blue, .strong-blue {
+        transform: scale(0.8);
+        top: 200px;
+        left: -60px;
+    }
+
+    .strong-blue {
+        top: 87px;
+        left: -40px;
+    }
+}
+
+@media (max-width: 280px) {
+    .light-blue, .strong-blue {
+        transform: scale(0.8);
+        top: 250px;
+        left: -60px;
+    }
+
+    .strong-blue {
+        top: 118px;
+        left: -30px;
+    }
+}

@@ -1,5 +1,7 @@
 {
   "name": "vagas",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
