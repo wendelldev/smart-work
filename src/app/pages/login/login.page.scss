@@ -1,4 +1,17 @@
 
+.light-blue, .strong-blue {
+    position: fixed;
+    left: 0;
+    top: 250px;
+    z-index: 0;
+}
+
+.strong-blue {
+    top: 98px;
+    left: -2px;
+}
+
+
 .logo {
     width: 100%;
     margin-top: 60px;
@@ -19,14 +32,14 @@
 
 form.login-form {
 
-    margin-top: 20px;
-    padding: 30px;
+    margin-top: 10vh;
+    padding: 10vw;
 
-    ion-item.styled {
+    ion-item {
         --padding-start: 12px;
         --highlight-height: 2px;
         margin-bottom: 20px;
-        box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.2);        ;
+        box-shadow: 0px 0px 2px 1px #4c8dff;        ;
         border-radius: 8px;
         
 
@@ -43,17 +56,15 @@ form.login-form {
 }
 
 .footer-box {
-    position: absolute;
-    bottom: 20px;
+    position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-
     
     .forgot-password, .registry {
         margin: 15px auto;
-        background: var(--ion-color-secondary);
+        background: var(--ion-color-primary);
         border-radius: 8px;
         padding: 5px 15px 5px 15px;
         color: #FFF;
@@ -66,25 +77,6 @@ form.login-form {
     }
     .registry {
         margin-top: 5px;
-        background: var(--ion-color-primary);
+        background: var(--ion-color-secondary);
     }
 }
-
-ion-button.login-button {
-    --padding-top: 22px;
-    --padding-bottom: 22px;
-    --box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.2);
-    font-weight: bold;
-    font-size: 20px;
-    text-transform: uppercase;
-    height: 100%;
-  
-    &[expand=block] {
-      --border-radius: 8px;
-    }
-    
-    ion-icon[slot=end] {
-      position: absolute;
-      right: 0;
-    }
-  }

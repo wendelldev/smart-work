@@ -24,7 +24,7 @@ export class LoginPage implements AfterViewInit {
   ngAfterViewInit() {
     const wrapperAnimation = this.animationControl.create()
       .addElement(this.wrapper.nativeElement)
-      .duration(800)
+      .duration(1000)
       .keyframes([
         { offset: 0, transform: 'translateY(-100px)', opacity: '0' },
         { offset: 0.5, transform: 'translateY(-50px)', opacity: '0' },
@@ -33,7 +33,7 @@ export class LoginPage implements AfterViewInit {
     
     const logoAnimation = this.animationControl.create()
       .addElement(this.logo.nativeElement)
-      .duration(700)
+      .duration(1000)
       .keyframes([
         { offset: 0, transform: 'scale(1)', opacity: '0' },
         { offset: 0.9, transform: 'scale(1.2) rotate(20deg)', opacity: '1' },

@@ -26,15 +26,24 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 
-.light-blue, .strong-blue {
-    position: fixed;
-    left: 0;
-    top: 250px;
-}
-
-.strong-blue {
-    top: 98px;
-    left: -2px;
+ion-button.sw-button {
+    --padding-top: 22px;
+    --padding-bottom: 22px;
+    --box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.2);
+    font-weight: bold;
+    font-size: 20px;
+    text-transform: uppercase;
+    margin-top: 40px;
+    height: 60px;
+  
+    &[expand=block] {
+      --border-radius: 8px;
+    }
+    
+    ion-icon[slot=end] {
+      position: absolute;
+      right: 0;
+    }
 }
 
 
