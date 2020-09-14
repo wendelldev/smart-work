@@ -55,28 +55,15 @@ form.login-form {
     }
 }
 
-.footer-box {
+
+    
+.forgot-password {
     position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-    .forgot-password, .registry {
-        margin: 15px auto;
-        background: var(--ion-color-primary);
-        border-radius: 8px;
-        padding: 5px 15px 5px 15px;
-        color: #FFF;
-    }
-    
-    .text-registry {
-        margin: 0;
-        margin-top: 10px;
-        font-weight: bold;
-    }
-    .registry {
-        margin-top: 5px;
-        background: var(--ion-color-secondary);
-    }
+    width: 60%;
+    text-align: center;
+    margin: 30px auto;
+    background: #FFF;
+    border-radius: 8px;
+    padding: 5px 10px 5px 10px;
+    color: var(--ion-color-danger);
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AnimationController, Animation } from '@ionic/angular';
 
@@ -10,6 +11,10 @@ import { AnimationController, Animation } from '@ionic/angular';
 export class LoginPage implements AfterViewInit {
 
   animation: Animation
+  loginForm: FormGroup
+  iconShowPass = 'eye-outline'
+  showPass = false
+
   @ViewChild('lightblue', {static: false}) light_blue: ElementRef
   @ViewChild('strongblue', {static: false}) strong_blue: ElementRef
   @ViewChild('wrapper', {static: false}) wrapper: ElementRef
@@ -18,10 +23,18 @@ export class LoginPage implements AfterViewInit {
 
   constructor(
     private router: Router,
-    private animationControl: AnimationController
-  ) { }
+    private animationControl: AnimationController,
+    private formBuilder: FormBuilder,
+
+  ) {
+    this.loginForm = this.formBuilder.group({
+      email: [null, [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+    })
+  }
 
   ngAfterViewInit() {
+
     const wrapperAnimation = this.animationControl.create()
       .addElement(this.wrapper.nativeElement)
       .duration(1000)
@@ -66,8 +79,23 @@ export class LoginPage implements AfterViewInit {
 
   }
 
-  goToNextPage() {
+  toggleShowPassword() {
+    if (!this.showPass) {
+      this.iconShowPass = 'eye-off-outline'
+      this.showPass = true
+    } else {
+      this.iconShowPass = 'eye-outline'
+      this.showPass = false
+    }
+  }
+
+  doLogin() {
     this.router.navigate(['/tabs'])
+  }
+
+  goToRegistration() {
+    this.router.navigate(['/registration'])
+    this.loginForm.reset()
   }
 
 }

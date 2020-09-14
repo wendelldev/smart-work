@@ -35,6 +35,10 @@ ion-button.sw-button {
     text-transform: uppercase;
     margin-top: 40px;
     height: 60px;
+
+    &[disabled] {
+        opacity: .8;
+    }
   
     &[expand=block] {
       --border-radius: 8px;
