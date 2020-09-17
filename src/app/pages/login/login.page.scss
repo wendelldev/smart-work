@@ -1,16 +1,4 @@
 
-.light-blue, .strong-blue {
-    position: fixed;
-    left: 0;
-    top: 250px;
-    z-index: 0;
-}
-
-.strong-blue {
-    top: 98px;
-    left: -2px;
-}
-
 
 .logo {
     width: 100%;
@@ -30,31 +18,14 @@
     }
 }
 
-form.login-form {
-
+.sw-form {
     margin-top: 10vh;
-    padding: 10vw;
-
-    ion-item {
-        --padding-start: 12px;
-        --highlight-height: 2px;
-        margin-bottom: 20px;
-        box-shadow: 0px 0px 2px 1px #4c8dff;        ;
-        border-radius: 8px;
-        
-
-        ion-icon {
-            font-size: 18px;
-            margin-right: 8px;
-            padding-right: 8px;
-        }
-
-        ion-icon[slot=start] {
-            border-right: 1px solid var(--ion-color-medium);
-        }
-    }
 }
 
+.footer-box {
+    position: relative;
+    width: auto;
+}
 
     
 .forgot-password {

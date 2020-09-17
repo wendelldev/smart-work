@@ -1,7 +1,11 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { LoadingService } from './../../services/loading.service';
+import { AuthenticationService } from './../../services/authentication.service';
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AnimationController, Animation } from '@ionic/angular';
+import { AnimationController, Animation, LoadingController } from '@ionic/angular';
+import { ToastService } from 'src/app/services/toast.service';
+
 
 @Component({
   selector: 'app-login',
@@ -25,12 +29,20 @@ export class LoginPage implements AfterViewInit {
     private router: Router,
     private animationControl: AnimationController,
     private formBuilder: FormBuilder,
+    private authService: AuthenticationService,
+    private alert: ToastService,
+    private loadingService: LoadingService,
+    private loadingControl: LoadingController
 
   ) {
     this.loginForm = this.formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     })
+  }
+
+  ionViewWillEnter() {
+    this.loginForm.reset()
   }
 
   ngAfterViewInit() {
@@ -80,22 +92,44 @@ export class LoginPage implements AfterViewInit {
   }
 
   toggleShowPassword() {
-    if (!this.showPass) {
-      this.iconShowPass = 'eye-off-outline'
-      this.showPass = true
-    } else {
-      this.iconShowPass = 'eye-outline'
-      this.showPass = false
-    }
+     this.showPass = !this.showPass
   }
 
   doLogin() {
-    this.router.navigate(['/tabs'])
+    this.loadingService.presentLoadingDefault()
+
+    const email = this.loginForm.get('email').value
+    const password = this.loginForm.get('password').value
+    
+    this.authService.SignIn(email, password)
+      .then(res => {
+
+        this.authService.getUserData(res.user.uid, 'candidates').then(res => {
+          if (res.val()) {
+            localStorage.setItem('user_type', res.val().user_type)
+          } else {
+            localStorage.setItem('user_type', 'company')
+          }
+        })
+        .catch(error => this.alert.presentToast(error.message))
+        .finally(() => {
+          this.loadingControl.dismiss()
+          this.router.navigate(['/tabs'])
+        })
+      })
+      .catch(error => {
+        console.log(error)
+        this.loadingControl.dismiss()
+        this.alert.presentToast(error.message)
+      })
   }
 
   goToRegistration() {
     this.router.navigate(['/registration'])
-    this.loginForm.reset()
+  }
+
+  goToPasswordRecover() {
+    this.router.navigate(['/recover-password'])
   }
 
 }

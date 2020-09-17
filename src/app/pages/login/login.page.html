@@ -9,7 +9,7 @@
   </div>
 
 
-  <form class="login-form" [formGroup]="loginForm" novalidate>
+  <form class="sw-form" [formGroup]="loginForm" novalidate>
 
     <ion-item lines="none">
       <ion-icon slot="start" name="person-outline"></ion-icon>
@@ -19,7 +19,7 @@
     <ion-item lines="none">
       <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
       <ion-input formControlName="password" [type]="showPass ? 'text' : 'password'" placeholder="Senha"></ion-input>
-      <ion-icon slot="end" (click)="toggleShowPassword()" [name]="iconShowPass"></ion-icon>
+      <ion-icon slot="end" (click)="toggleShowPassword()" [name]="showPass ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
     </ion-item>
 
     <ion-button
@@ -44,8 +44,6 @@
     </ion-button>
   </form>
 
-  <div class="footer-box">
-    <p class="forgot-password">Esqueci minha senha</p>
-  </div>
+  <p class="forgot-password" (click)="goToPasswordRecover()">Esqueci minha senha</p>
 
 </ion-content>

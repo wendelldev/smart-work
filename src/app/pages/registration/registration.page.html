@@ -1,9 +1,60 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>registration</ion-title>
+  <ion-toolbar color="secondary">
+
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Registre-se</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <form class="sw-form" [formGroup]="registerForm" novalidate>
+
+    <ion-item lines="none">
+      <ion-icon slot="start" name="person-outline"></ion-icon>
+      <ion-input formControlName="email" type="email" placeholder="Email"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-icon slot="start" name="person-outline"></ion-icon>
+      <ion-input formControlName="email_confirmation" type="email" placeholder="Confirme o email"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+      <ion-input formControlName="password" [type]="showPass ? 'text' : 'password'" placeholder="Senha"></ion-input>
+      <ion-icon slot="end" (click)="toggleShowPassword()" [name]="showPass ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+      <ion-input formControlName="password_confirmation" [type]="showPassConfirmation ? 'text' : 'password'" placeholder="Senha"></ion-input>
+      <ion-icon slot="end" (click)="toggleShowPasswordConfirmation()" [name]="showPassConfirmation ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label>Tipo de usuário</ion-label>
+      <ion-icon slot="start" name="person-outline"></ion-icon>
+      <ion-select formControlName="user_type" placeholder="Selecione">
+        <ion-select-option value="company">Empresa</ion-select-option>
+        <ion-select-option value="candidate">Candidato</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button
+      [disabled]="registerForm.invalid"
+      color="secondary"
+      expand="block"
+      class="sw-button"
+      (click)="register()"
+    >
+      Registrar
+      <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+    </ion-button>
+
+  </form>
 
 </ion-content>
