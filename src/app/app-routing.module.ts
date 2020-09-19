@@ -17,6 +17,10 @@ const routes: Routes = [
     path: 'recover-password',
     loadChildren: () => import('./pages/recover-password/recover-password.module').then( m => m.RecoverPasswordPageModule)
   },
+  {
+    path: 'email-verification',
+    loadChildren: () => import('./pages/email-verification/email-verification.module').then( m => m.EmailVerificationPageModule)
+  },
 
 ];
 @NgModule({

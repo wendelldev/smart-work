@@ -45,22 +45,22 @@ export class AuthenticationService {
     return (user !== null && user.emailVerified !== false) ? true : false
   }
 
-  SetCandidateData(candidate: any, userType: string) {
-    return this.database.list('candidates/')
-      .set(candidate.user.uid, {
-        uid: candidate.user.uid,
-        email: candidate.user.email,
-        user_type: userType
-      })
-  }
-
-  SetCompanyData(company: any, userType: string) {
-    return this.database.list('companies/')
-      .set(company.user.uid, {
-        uid: company.user.uid,
-        email: company.user.email,
-        user_type: userType
-      })
+  SetUserData(res: any, userType: string) {
+    if (userType === 'contractor') {
+      this.database.list('contractors/')
+        .set(res.user.uid, {
+          uid: res.user.uid,
+          email: res.user.email,
+          user_type: userType
+        })
+    } else {
+      this.database.list('candidates/')
+        .set(res.user.uid, {
+          uid: res.user.uid,
+          email: res.user.email,
+          user_type: userType
+        })
+    }
   }
 
   getUserData(userId: string, type: string) {

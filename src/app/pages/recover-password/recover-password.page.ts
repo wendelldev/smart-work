@@ -43,7 +43,7 @@ export class RecoverPasswordPage implements OnInit {
       .catch(error => {
         this.loadingControl.dismiss()
         if (error.code === 'auth/user-not-found') {
-          this.alert.presentToast('Email não encontrado na base de dados. Verifique seu email.', 'bottom', 'danger')
+          this.alert.presentToast('Email não encontrado na base de dados. Verifique se o email está correto.', 'bottom', 'danger')
         } else {
           this.alert.presentToast(error.message, 'bottom', 'danger')
         }

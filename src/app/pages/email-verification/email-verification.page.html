@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Verifique seu email</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img class="light-blue" src="/assets/shape-light-blue.svg" alt="">
+  <img class="strong-blue" src="/assets/shape-strong-blue.svg" alt="">
+
+  <p class="wrapper">Enviamos um email para verificar sua conta. Você só poderá realizar login após a verificação do email.</p>
+
+  <ion-button
+    [routerLink]="['/']"
+    color="secondary"
+    expand="block"
+    class="sw-button"
+  >
+    Ir para Login
+    <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+  </ion-button>
+
+  <ion-button
+    (click)="resendEmailVerification()"
+    color="secondary"
+    expand="block"
+    class="sw-button"
+  >
+    Reenviar email
+    <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+  </ion-button>
+
+</ion-content>

@@ -54,20 +54,12 @@ export class RegistrationPage implements OnInit {
     const password = this.registerForm.get('password').value
     const userType = this.registerForm.get('user_type').value
     this.authService.registerUser(email, password)
-      .then(user => {
-        if (this.registerForm.get('user_type').value === 'company') {
-          this.authService.SetCompanyData(user, userType)
-          this.loadingControl.dismiss()
-          this.registerForm.reset()
-          this.router.navigate(['/'])
-          this.alert.presentToast('Empresa registrada, faça login!')
-        } else {
-          this.authService.SetCandidateData(user, userType)
-          this.loadingControl.dismiss()
-          this.registerForm.reset()
-          this.router.navigate(['/'])
-          this.alert.presentToast('Candidato(a) registrado(a), faça login!')
-        }
+      .then(res => {
+        this.authService.SetUserData(res, userType)
+        this.registerForm.reset()
+        res.user.sendEmailVerification()
+        this.loadingControl.dismiss()
+        this.router.navigate(['/email-verification'])
       })
       .catch((error) => {
         this.loadingControl.dismiss()

@@ -31,7 +31,7 @@
 
     <ion-item lines="none">
       <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-      <ion-input formControlName="password_confirmation" [type]="showPassConfirmation ? 'text' : 'password'" placeholder="Senha"></ion-input>
+      <ion-input formControlName="password_confirmation" [type]="showPassConfirmation ? 'text' : 'password'" placeholder="Confirmar Senha"></ion-input>
       <ion-icon slot="end" (click)="toggleShowPasswordConfirmation()" [name]="showPassConfirmation ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
     </ion-item>
 
@@ -39,7 +39,7 @@
       <ion-label>Tipo de usuário</ion-label>
       <ion-icon slot="start" name="person-outline"></ion-icon>
       <ion-select formControlName="user_type" placeholder="Selecione">
-        <ion-select-option value="company">Empresa</ion-select-option>
+        <ion-select-option value="contractor">Contratante</ion-select-option>
         <ion-select-option value="candidate">Candidato</ion-select-option>
       </ion-select>
     </ion-item>

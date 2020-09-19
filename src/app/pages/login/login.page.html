@@ -34,16 +34,16 @@
     </ion-button>
 
     <ion-button
+      [routerLink]="['/registration']"
       color="secondary"
       expand="block"
       class="sw-button"
-      (click)="goToRegistration()"
     >
       Registre-se
       <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
     </ion-button>
   </form>
 
-  <p class="forgot-password" (click)="goToPasswordRecover()">Esqueci minha senha</p>
+  <p class="forgot-password" [routerLink]="['/recover-password']">Esqueci minha senha</p>
 
 </ion-content>

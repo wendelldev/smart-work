@@ -16,7 +16,6 @@ export class LoginPage implements AfterViewInit {
 
   animation: Animation
   loginForm: FormGroup
-  iconShowPass = 'eye-outline'
   showPass = false
 
   @ViewChild('lightblue', {static: false}) light_blue: ElementRef
@@ -103,33 +102,34 @@ export class LoginPage implements AfterViewInit {
     
     this.authService.SignIn(email, password)
       .then(res => {
-
-        this.authService.getUserData(res.user.uid, 'candidates').then(res => {
-          if (res.val()) {
-            localStorage.setItem('user_type', res.val().user_type)
-          } else {
-            localStorage.setItem('user_type', 'company')
-          }
-        })
-        .catch(error => this.alert.presentToast(error.message))
-        .finally(() => {
+        if (res.user.emailVerified) {
+          this.authService.getUserData(res.user.uid, 'candidates').then(res => {
+            if (res.val()) {
+              localStorage.setItem('user_type', res.val().user_type)
+              this.loadingControl.dismiss()
+              this.router.navigate(['/tabs'])
+            } else {
+              localStorage.setItem('user_type', 'contractor')
+              this.loadingControl.dismiss()
+              this.router.navigate(['/tabs'])
+            }
+          })
+          .catch(error => this.alert.presentToast(error.message))
+        } else {
           this.loadingControl.dismiss()
-          this.router.navigate(['/tabs'])
-        })
+          this.router.navigate(['/email-verification'])
+          this.alert.presentToast('Verifique seu email.')
+        }
       })
       .catch(error => {
-        console.log(error)
         this.loadingControl.dismiss()
-        this.alert.presentToast(error.message)
+        if (error.code === "auth/user-not-found") {
+          this.alert.presentToast('Email não cadastrado.', 'bottom', 'danger')
+        } else  if (error.code === "auth/wrong-password") {
+          this.alert.presentToast('Senha incorreta para o email informado.', 'bottom', 'danger')
+        } else {
+          this.alert.presentToast('Algo deu errado, verifique sua conexão com a internet.', 'bottom', 'danger')
+        }
       })
   }
-
-  goToRegistration() {
-    this.router.navigate(['/registration'])
-  }
-
-  goToPasswordRecover() {
-    this.router.navigate(['/recover-password'])
-  }
-
 }
