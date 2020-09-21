@@ -1,5 +1,6 @@
+import { SwModalComponent } from './../../components/sw-modal/sw-modal.component';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { LoadingService } from './../../services/loading.service';
 import { AuthenticationService } from './../../services/authentication.service';
 import { ValidatorsService } from './../../services/validators.service';
@@ -25,7 +26,8 @@ export class RegistrationPage implements OnInit {
     private authService: AuthenticationService,
     private alert: ToastService,
     private loadingService: LoadingService,
-    private loadingControl: LoadingController
+    private loadingControl: LoadingController,
+    private modalControl: ModalController
   ) { }
 
   ngOnInit() {
@@ -48,6 +50,21 @@ export class RegistrationPage implements OnInit {
     this.showPassConfirmation = !this.showPassConfirmation
   }
 
+  async openModal(text: string) {
+    const modal = await this.modalControl.create({
+      component: SwModalComponent,
+      cssClass: "sw-modal",
+      componentProps: {
+        "text": text
+      }
+    })
+    modal.onDidDismiss().then(() => {
+      this.router.navigate(['/email-verification'])
+    })
+
+    modal.present()
+  }
+
   register() {
     this.loadingService.presentLoadingDefault()
     const email = this.registerForm.get('email').value
@@ -59,7 +76,7 @@ export class RegistrationPage implements OnInit {
         this.registerForm.reset()
         res.user.sendEmailVerification()
         this.loadingControl.dismiss()
-        this.router.navigate(['/email-verification'])
+        this.openModal("Cadastro realizado com sucesso. Confirme seu email.")
       })
       .catch((error) => {
         this.loadingControl.dismiss()

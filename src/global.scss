@@ -25,6 +25,17 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+.sw-modal .modal-wrapper {
+    background: transparent;
+
+    ion-card {
+        position: absolute;
+        top: 35%;
+        align-self: center;
+        border-radius: 10px;
+    }
+}
+
 ion-content {
     --background: #ebe8e8;
 }

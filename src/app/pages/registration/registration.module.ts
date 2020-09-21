@@ -1,3 +1,4 @@
+import { SwModalComponent } from './../../components/sw-modal/sw-modal.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,6 +17,6 @@ import { RegistrationPage } from './registration.page';
     IonicModule,
     RegistrationPageRoutingModule
   ],
-  declarations: [RegistrationPage]
+  declarations: [RegistrationPage, SwModalComponent]
 })
 export class RegistrationPageModule {}
