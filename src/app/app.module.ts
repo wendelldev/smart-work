@@ -5,13 +5,18 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Camera } from '@ionic-native/camera/ngx'
+import { File } from '@ionic-native/file/ngx'
+import { WebView } from '@ionic-native/ionic-webview/ngx'
+import { Crop } from '@ionic-native/crop/ngx'
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { AngularFireModule } from '@angular/fire'
 import { AngularFireAuthModule } from '@angular/fire/auth'
-import { AngularFirestoreModule } from '@angular/fire/firestore'
+import { AngularFireStorageModule } from '@angular/fire/storage'
 import { AngularFireDatabaseModule } from '@angular/fire/database'
 import { environment } from '../environments/environment'
 
@@ -22,14 +27,18 @@ import { environment } from '../environments/environment'
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    AngularFireStorageModule,
     AngularFireDatabaseModule,
-    AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase)
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
+    File,
+    WebView,
+    Crop,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

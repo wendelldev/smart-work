@@ -16,7 +16,7 @@ export class LoginPage implements AfterViewInit {
 
   animation: Animation
   loginForm: FormGroup
-  showPass = false
+  showPass: boolean = false
 
   @ViewChild('lightblue', {static: false}) light_blue: ElementRef
   @ViewChild('strongblue', {static: false}) strong_blue: ElementRef
@@ -102,6 +102,7 @@ export class LoginPage implements AfterViewInit {
     
     this.authService.SignIn(email, password)
       .then(res => {
+        localStorage.setItem('user_uid', res.user.uid)
         if (res.user.emailVerified) {
           this.authService.getUserData(res.user.uid, 'candidates').then(res => {
             if (res.val()) {

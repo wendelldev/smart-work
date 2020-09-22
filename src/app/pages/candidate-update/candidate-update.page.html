@@ -1,0 +1,146 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Perfil profissional</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-slides>
+    <!-- Tela para selecionar foto de perfil do candidato -->
+    <!-- swiper-no-swiping -->
+    <ion-slide>
+      <ion-avatar>
+        <ion-icon *ngIf="!avatar" name="person-outline"></ion-icon>
+        <img *ngIf="avatar" [src]="avatar">
+      </ion-avatar>
+      <ion-progress-bar class="progress" [value]="uploadProgress" color="primary"></ion-progress-bar>
+      <h3 class="wrapper" color="light">Primeiro vamos inserir sua imagem de perfil.</h3>
+      <p class="text-wrapper" color="light">Uma foto bem apresentável pode causar uma melhor impressão ao contratante.</p>
+      <form class="sw-form" [formGroup]="candidateForm">
+
+        <ion-item lines="none" button (click)="chooseSource()" *ngIf="!uploadFinalized">
+          <ion-label color="dark">{{ avatar ? 'Foto selecionada' : 'Selecione uma foto' }}</ion-label>
+          <ion-icon slot="start" name="attach-outline"></ion-icon>
+        </ion-item>
+
+        <ion-button
+          *ngIf="uploadFinalized"
+          class="sw-button"
+          color="light"
+          expand="block"
+          (click)="nextPage()"
+        >
+          Próximo
+          <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+        </ion-button>
+
+        <ion-button
+          *ngIf="!uploadFinalized"
+          [disabled]="!avatar"
+          class="sw-button"
+          color="light"
+          expand="block"
+          (click)="uploadImage()"
+        >
+          Enviar imagem
+          <ion-icon slot="end" name="cloud-upload-outline"></ion-icon>
+        </ion-button>
+      </form>
+    </ion-slide>
+
+    <!-- Tela para inserir nome, linkedInUrl e data de nascimento -->
+    <ion-slide>
+      <h3 class="wrapper" color="light">Dados pessoais.</h3>
+      <form class="sw-form" [formGroup]="candidateForm" novalidate>
+          <ion-item lines="none">
+            <ion-input formControlName="name" type="text" placeholder="Nome completo"></ion-input>
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-input formControlName="linkedInUrl" type="text" placeholder="Link perfil LinkedIn"></ion-input>
+            <ion-icon slot="start" name="logo-linkedin"></ion-icon>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-input formControlName="birthday" type="tel" placeholder="Data de nascimento" [brmasker]="{mask: '00/00/0000', type: 'num', len:10}"></ion-input>
+            <ion-icon slot="start" name="logo-linkedin"></ion-icon>
+          </ion-item>
+
+          <ion-button
+            [disabled]="candidateForm.get('name').invalid || candidateForm.get('linkedInUrl').invalid || candidateForm.get('birthday').invalid"
+            class="sw-button"
+            color="light"
+            expand="block"
+            (click)="nextPage()"
+          >
+            Próximo
+            <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+          </ion-button>
+      </form>
+    </ion-slide>
+
+    <!-- Tela para inserir telefone residencial e celular -->
+    <ion-slide>
+      <h3 class="wrapper" color="light">Contato</h3>
+      <form class="sw-form" [formGroup]="candidateForm" novalidate>
+          <ion-item lines="none">
+            <ion-input formControlName="residencial_phone" type="tel" placeholder="Telefone residencial" [brmasker]="{phone: true}"></ion-input>
+            <ion-icon name="call-outline" slot="start"></ion-icon>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-input formControlName="mobile_phone" type="tel" placeholder="Telefone celular" [brmasker]="{phone: true}"></ion-input>
+            <ion-icon slot="start" name="call-outline"></ion-icon>
+          </ion-item>
+
+          <ion-button
+            [disabled]="candidateForm.get('residencial_phone').invalid || candidateForm.get('mobile_phone').invalid"
+            class="sw-button"
+            color="light"
+            expand="block"
+            (click)="nextPage()"
+          >
+            Próximo
+            <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+          </ion-button>
+      </form>
+    </ion-slide>
+
+    <!-- Tela para inserir estado e cidade -->
+    <ion-slide>
+
+    </ion-slide>
+
+    <!-- Tela para select de escolaridade -->
+    <ion-slide>
+
+    </ion-slide>
+
+    <!-- Tela para text área de atuação -->
+    <ion-slide>
+
+    </ion-slide>
+
+    <!-- Tela para text qualificações -->
+    <ion-slide>
+
+    </ion-slide>
+
+    <!-- Tela para text Experiências de trabalho -->
+    <ion-slide>
+
+    </ion-slide>
+
+    <!-- Tela para text Apresentação -->
+    <ion-slide>
+
+    </ion-slide>
+
+  </ion-slides>
+
+</ion-content>

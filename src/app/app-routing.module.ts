@@ -21,6 +21,10 @@ const routes: Routes = [
     path: 'email-verification',
     loadChildren: () => import('./pages/email-verification/email-verification.module').then( m => m.EmailVerificationPageModule)
   },
+  {
+    path: 'candidate-update',
+    loadChildren: () => import('./pages/candidate-update/candidate-update.module').then( m => m.CandidateUpdatePageModule)
+  },
 
 ];
 @NgModule({
