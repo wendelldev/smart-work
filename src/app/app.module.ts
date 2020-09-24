@@ -19,6 +19,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth'
 import { AngularFireStorageModule } from '@angular/fire/storage'
 import { AngularFireDatabaseModule } from '@angular/fire/database'
 import { environment } from '../environments/environment'
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +27,7 @@ import { environment } from '../environments/environment'
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    HttpClientModule,
     AppRoutingModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,

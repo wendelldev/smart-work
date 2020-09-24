@@ -18,12 +18,12 @@
         <img *ngIf="avatar" [src]="avatar">
       </ion-avatar>
       <ion-progress-bar class="progress" [value]="uploadProgress" color="primary"></ion-progress-bar>
-      <h3 class="wrapper" color="light">Primeiro vamos inserir sua imagem de perfil.</h3>
-      <p class="text-wrapper" color="light">Uma foto bem apresentável pode causar uma melhor impressão ao contratante.</p>
       <form class="sw-form" [formGroup]="candidateForm">
+        <h3 class="wrapper">Primeiro vamos inserir sua imagem de perfil.</h3>
+        <p class="text-wrapper">Uma foto bem apresentável pode causar uma melhor impressão ao contratante.</p>
 
         <ion-item lines="none" button (click)="chooseSource()" *ngIf="!uploadFinalized">
-          <ion-label color="dark">{{ avatar ? 'Foto selecionada' : 'Selecione uma foto' }}</ion-label>
+          <ion-label color="dark">Selecione uma foto</ion-label>
           <ion-icon slot="start" name="attach-outline"></ion-icon>
         </ion-item>
 
@@ -54,8 +54,8 @@
 
     <!-- Tela para inserir nome, linkedInUrl e data de nascimento -->
     <ion-slide>
-      <h3 class="wrapper" color="light">Dados pessoais.</h3>
       <form class="sw-form" [formGroup]="candidateForm" novalidate>
+        <h3 class="wrapper">Dados pessoais.</h3>
           <ion-item lines="none">
             <ion-input formControlName="name" type="text" placeholder="Nome completo"></ion-input>
             <ion-icon name="person-outline" slot="start"></ion-icon>
@@ -68,7 +68,7 @@
 
           <ion-item lines="none">
             <ion-input formControlName="birthday" type="tel" placeholder="Data de nascimento" [brmasker]="{mask: '00/00/0000', type: 'num', len:10}"></ion-input>
-            <ion-icon slot="start" name="logo-linkedin"></ion-icon>
+            <ion-icon slot="start" name="person-outline"></ion-icon>
           </ion-item>
 
           <ion-button
@@ -86,8 +86,8 @@
 
     <!-- Tela para inserir telefone residencial e celular -->
     <ion-slide>
-      <h3 class="wrapper" color="light">Contato</h3>
       <form class="sw-form" [formGroup]="candidateForm" novalidate>
+        <h3 class="wrapper">Contato</h3>
           <ion-item lines="none">
             <ion-input formControlName="residencial_phone" type="tel" placeholder="Telefone residencial" [brmasker]="{phone: true}"></ion-input>
             <ion-icon name="call-outline" slot="start"></ion-icon>
@@ -99,7 +99,7 @@
           </ion-item>
 
           <ion-button
-            [disabled]="candidateForm.get('residencial_phone').invalid || candidateForm.get('mobile_phone').invalid"
+            [disabled]="candidateForm.get('mobile_phone').invalid"
             class="sw-button"
             color="light"
             expand="block"
@@ -113,32 +113,279 @@
 
     <!-- Tela para inserir estado e cidade -->
     <ion-slide>
+      <form class="sw-form" [formGroup]="candidateForm" novalidate>
+        <h3 class="wrapper">Localização</h3>
+        <ion-item lines="none">
+          <ion-icon slot="start" name="location-outline"></ion-icon>
+          <ion-select
+            placeholder="Estado" 
+            (ionChange)="onStateChange($event)" 
+            formControlName="state_id"
+            okText="Ok"
+            cancelText="Cancelar"
+          >
+            <ion-select-option
+              *ngFor="let state of states"
+              [value]="state.id"
+            >{{ state.name }}</ion-select-option>
+          </ion-select>
+        </ion-item>
 
+        <ion-item lines="none">
+          <ion-icon slot="start" name="location-outline"></ion-icon>
+          <ion-select
+            placeholder="Cidade"
+            formControlName="city_id"
+            okText="Ok"
+            cancelText="Cancelar"
+          >
+            <ion-select-option
+              *ngFor="let city of cities"
+              [value]="city.id"
+            >{{ city.name }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-button
+          [disabled]="candidateForm.get('state_id').invalid || candidateForm.get('city_id').invalid"
+          class="sw-button"
+          color="light"
+          expand="block"
+          (click)="fetchStateAndCity()"
+        >
+          Próximo
+          <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+        </ion-button>
+    </form>
     </ion-slide>
 
     <!-- Tela para select de escolaridade -->
     <ion-slide>
+      <form class="sw-form" [formGroup]="candidateForm" novalidate>
+        <h3 class="wrapper">Qual sua escolaridade?</h3>
+        <p class="text-wrapper">Também informe qual sua área de atuação.</p>
+        <ion-item lines="none">
+          <ion-icon slot="start" name="book-outline"></ion-icon>
+          <ion-select
+            placeholder="Escolaridade*" 
+            formControlName="scholarity"
+            okText="Ok"
+            cancelText="Cancelar"
+            interface="action-sheet"
+          >
+            <ion-select-option value="Nenhuma">Nenhuma</ion-select-option>
+            <ion-select-option value="Fundamental Incompleto">Ensino Fundamental Incompleto</ion-select-option>
+            <ion-select-option value="Fundamental">Ensino Fundamental Completo</ion-select-option>
+            <ion-select-option value="Médio Incompleto">Ensino Médio Incompleto</ion-select-option>
+            <ion-select-option value="Médio Completo">Ensino Médio Completo</ion-select-option>
+            <ion-select-option value="Superior Incompleto">Ensino Superior Incompleto</ion-select-option>
+            <ion-select-option value="Superior Completo">Ensino Superior Completo</ion-select-option>
+            <ion-select-option value="Mestrado Incompleto">Mestrado Incompleto</ion-select-option>
+            <ion-select-option value="Mestrado Completo">Mestrado Completo</ion-select-option>
+            <ion-select-option value="Doutorado Incompleto">Doutorado Incompleto</ion-select-option>
+            <ion-select-option value="Doutorado Completo">Doutorado Completo</ion-select-option>
+          </ion-select>
+        </ion-item>
 
-    </ion-slide>
+        <ion-item lines="none">
+          <ion-textarea formControlName="actuation_area" rows="4" autoGrow="true" placeholder="Área de atuação*"></ion-textarea>
+        </ion-item>
 
-    <!-- Tela para text área de atuação -->
-    <ion-slide>
-
+        <ion-button
+          [disabled]="candidateForm.get('scholarity').invalid || candidateForm.get('actuation_area').invalid"
+          class="sw-button"
+          color="light"
+          expand="block"
+          (click)="nextPage()"
+        >
+          Próximo
+          <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+        </ion-button>
+      </form>
     </ion-slide>
 
     <!-- Tela para text qualificações -->
     <ion-slide>
+      <form class="sw-form" [formGroup]="candidateForm" novalidate>
+        <h3 class="wrapper">Qualificações</h3>
+        <p class="text-wrapper text-wrapper-justify">Nos conte que qualificações você possui, como cursos ou habilidades que você sabe e possa chamar a atenção de um possível contratante.</p>
+        <p class="text-wrapper text-wrapper-justify">Atenção: Para cursos informados, talvez seja necessário comprovação com certificado, é o contratante quem decide isso.</p>
+        <ion-item lines="none">
+          <ion-textarea formControlName="qualifications" rows="4" autoGrow="true" placeholder="Qualificações*"></ion-textarea>
+        </ion-item>
 
+          <ion-button
+            [disabled]="candidateForm.get('qualifications').invalid"
+            class="sw-button"
+            color="light"
+            expand="block"
+            (click)="nextPage()"
+          >
+            Próximo
+            <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+          </ion-button>
+      </form>
     </ion-slide>
 
     <!-- Tela para text Experiências de trabalho -->
     <ion-slide>
+      <form class="sw-form" [formGroup]="candidateForm" novalidate>
+        <h3 class="wrapper">Experiência de trabalho</h3>
+        <p class="text-wrapper text-wrapper-justify">Liste suas experiências profissionais, sejam elas de estágio, carteira assinada ou freelancer. Tente inserir o período em que ficou nessas atividades.</p>
+        <ion-item lines="none">
+          <ion-textarea formControlName="experience" rows="4" autoGrow="true" placeholder="Experiência de trabalho*"></ion-textarea>
+        </ion-item>
 
+          <ion-button
+            [disabled]="candidateForm.get('experience').invalid"
+            class="sw-button"
+            color="light"
+            expand="block"
+            (click)="nextPage()"
+          >
+            Próximo
+            <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+          </ion-button>
+      </form>
     </ion-slide>
 
     <!-- Tela para text Apresentação -->
     <ion-slide>
+      <form class="sw-form" [formGroup]="candidateForm" novalidate>
+        <h3 class="wrapper">Carta de apresentação</h3>
+        <p class="text-wrapper text-wrapper-justify">Aconselhamos você a preencher esse campo, porém, você pode pular se preferir.</p>
+        <p class="text-wrapper text-wrapper-justify">Um bom texto de apresentação pode fazer toda a diferença em ser contratado ou não.</p>
+        <ion-item lines="none">
+          <ion-textarea formControlName="presentation_text" rows="6" autoGrow="true" placeholder="Carta de apresentação"></ion-textarea>
+        </ion-item>
 
+        <ion-button
+          class="sw-button"
+          color="light"
+          expand="block"
+          (click)="nextPage()"
+        >
+          Concluir
+          <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+        </ion-button>
+      </form>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-card>
+        <ion-card-header>
+          <ion-avatar>
+            <ion-icon *ngIf="!avatar" name="person-outline"></ion-icon>
+            <img *ngIf="avatar" [src]="avatar">
+          </ion-avatar>
+        </ion-card-header>
+
+        <ion-item lines="none">
+          <ion-text color="secondary">Nome</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-text color="medium">{{ candidateForm.get('name').value }}</ion-text>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-text color="secondary">LinkedIn</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-text color="medium">{{ candidateForm.get('linkedInUrl').value || 'Não informado' }}</ion-text>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-text color="secondary">Data de nascimento</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-text color="medium">{{ candidateForm.get('birthday').value }}</ion-text>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-text color="secondary">Telefone residencial</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-text color="medium">{{ candidateForm.get('residencial_phone').value || 'Não informado' }}</ion-text>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-text color="secondary">Telefone celular</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-text color="medium">{{ candidateForm.get('mobile_phone').value }}</ion-text>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-text color="secondary">Estado</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-text color="medium">{{ state?.name || 'Não informado' }}</ion-text>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-text color="secondary">Cidade</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-text color="medium">{{ city?.name || 'Não informado' }}</ion-text>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-text color="secondary">Escolaridade</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-text color="medium">{{ candidateForm.get('scholarity').value }}</ion-text>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-text color="secondary">Área de atuação</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-text color="medium">{{ candidateForm.get('actuation_area').value }}</ion-text>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-text color="secondary">Qualificações</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-text color="medium">{{ candidateForm.get('qualifications').value }}</ion-text>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-text color="secondary">Experiência de trabalho</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-text color="medium">{{ candidateForm.get('experience').value }}</ion-text>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-text color="secondary">Carta de apresentação</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-text color="medium">{{ candidateForm.get('presentation_text').value || 'Não informado' }}</ion-text>
+        </ion-item>
+
+      </ion-card>
+
+      <ion-button
+        class="sw-button outside-form"
+        color="light"
+        expand="block"
+        (click)="goToInit()"
+      >
+        Alterar dados
+        <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+      </ion-button>
+
+      <ion-button
+        class="sw-button outside-form"
+        color="light"
+        expand="block"
+        (click)="saveData()"
+      >
+        Salvar
+        <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+      </ion-button>
+      
     </ion-slide>
 
   </ion-slides>

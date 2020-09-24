@@ -102,20 +102,25 @@ export class LoginPage implements AfterViewInit {
     
     this.authService.SignIn(email, password)
       .then(res => {
-        localStorage.setItem('user_uid', res.user.uid)
+        localStorage.setItem('user', JSON.stringify(res.user))
         if (res.user.emailVerified) {
           this.authService.getUserData(res.user.uid, 'candidates').then(res => {
             if (res.val()) {
-              localStorage.setItem('user_type', res.val().user_type)
-              this.loadingControl.dismiss()
-              this.router.navigate(['/tabs'])
-            } else {
-              localStorage.setItem('user_type', 'contractor')
+              console.log(res.val())
+              localStorage.setItem('user_data', JSON.stringify(res.val()))
               this.loadingControl.dismiss()
               this.router.navigate(['/tabs'])
             }
           })
-          .catch(error => this.alert.presentToast(error.message))
+
+          this.authService.getUserData(res.user.uid, 'contractors').then(res => {
+            if (res.val()) {
+              localStorage.setItem('user_data', JSON.stringify(res.val()))
+              this.loadingControl.dismiss()
+              this.router.navigate(['/tabs'])
+            }
+          })
+          
         } else {
           this.loadingControl.dismiss()
           this.router.navigate(['/email-verification'])

@@ -6,17 +6,22 @@ ion-slides {
 ion-slide {
     display: flex;
     flex-direction: column;
+    overflow: auto;
 }
 
 h3.wrapper, p.text-wrapper {
-    width: 85%;
     color: var(--ion-color-light);
-    margin: 10px;
+    margin-bottom: 15px;
+}
+
+p.text-wrapper-justify {
+    text-align: justify;
 }
 
 .sw-form {
     padding: 5vw;
     width: 90%;
+    overflow-y: scroll;
 }
 
 ion-avatar {
@@ -36,4 +41,24 @@ ion-avatar {
 .progress {
     margin: 20px;
     width: 70%;
+}
+
+ion-card {
+    border-radius: 10px;
+    overflow-y: scroll;
+    width: 90%;
+    padding-bottom: 20px;
+
+    ion-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+
+.sw-button.outside-form {
+    width: 90%;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }

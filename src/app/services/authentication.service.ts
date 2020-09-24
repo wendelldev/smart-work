@@ -1,5 +1,4 @@
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database'
 
@@ -9,24 +8,10 @@ import { AngularFireDatabase } from '@angular/fire/database'
 })
 export class AuthenticationService {
 
-  userData: any
-
   constructor(
-    private angularFireStore: AngularFirestore,
     private angularFireAuth: AngularFireAuth,
     private database: AngularFireDatabase
-  ) {
-    this.angularFireAuth.authState.subscribe(user => {
-      if (user) {
-        this.userData = user
-        localStorage.setItem('user', JSON.stringify(this.userData))
-        JSON.parse(localStorage.getItem('user'))
-      } else {
-        localStorage.setItem('user', null)
-        JSON.parse(localStorage.getItem('user'))
-      }
-    })
-  }
+  ) { }
 
   SignIn(email: string, password: string) {
     return this.angularFireAuth.signInWithEmailAndPassword(email, password)
@@ -61,6 +46,10 @@ export class AuthenticationService {
           user_type: userType
         })
     }
+  }
+
+  updateUserData(userId: string, userType: string, data: any) {
+    return this.database.list(`${userType}s/`).update(userId, data)
   }
 
   getUserData(userId: string, type: string) {
