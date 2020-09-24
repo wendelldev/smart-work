@@ -1,3 +1,5 @@
+import { Storage } from '@ionic/storage';
+import { Router } from '@angular/router';
 import { LoadingService } from './../../services/loading.service';
 import { AuthenticationService } from './../../services/authentication.service';
 import { LocationService } from './../../services/location.service';
@@ -49,7 +51,9 @@ export class CandidateUpdatePage implements OnInit {
     private location: LocationService,
     private authService: AuthenticationService,
     private loadingService: LoadingService,
-    private loadingControl: LoadingController
+    private loadingControl: LoadingController,
+    private router: Router,
+    private localStorage: Storage
   ) { }
 
   ngOnInit() {
@@ -73,19 +77,19 @@ export class CandidateUpdatePage implements OnInit {
     )
   }
 
-  ionViewWillEnter() {
-    if (this.authService.isLoggedIn) {
-      this.user = JSON.parse(localStorage.getItem('user'))
-      this.userData = JSON.parse(localStorage.getItem('user_data'))
-    
-      this.authService.getUserData(this.user.uid, this.userData.user_type + 's').then(res => {
-        if (res.val().avatar_url) {
-          this.avatar = this.sanitizer.bypassSecurityTrustResourceUrl(res.val().avatar_url)
-          this.slides.slideTo(1)
-          this.alert.presentToast('Você já possui foto de perfil, continue seu cadastro.')
-        }
-      })
-    }
+  // lembrar de passar parametro update para atualizar o usuario
+
+  async ionViewWillEnter() {
+    this.user = JSON.parse(await this.localStorage.get('user'))
+    this.userData = JSON.parse(await this.localStorage.get('user_data'))
+  
+    this.authService.getUserData(this.user.uid, this.userData.user_type + 's').then(res => {
+      if (res.val().avatar_url) {
+        this.avatar = this.sanitizer.bypassSecurityTrustResourceUrl(res.val().avatar_url)
+        this.slides.slideTo(1)
+        this.alert.presentToast('Você já possui foto de perfil, continue seu cadastro.')
+      }
+    })
   }
 
   fetchCities(stateId: number): Observable<any[]> {
@@ -102,7 +106,6 @@ export class CandidateUpdatePage implements OnInit {
     this.location.getStateById(this.candidateForm.get('state_id').value).subscribe(
       data => {
         this.state = data[0]
-        console.log(this.state)
       },
       error => this.alert.presentToast(error.message, 'bottom', 'danger')
     )
@@ -131,6 +134,7 @@ export class CandidateUpdatePage implements OnInit {
         console.log(res)
         this.authService.updateUserData(this.user.uid, this.userData.user_type, { profile_updated: true })
         this.loadingControl.dismiss()
+        this.router.navigate(['/tabs/tab1'])
         this.alert.presentToast('Usuário atualizado com sucesso.')
       })
       .catch(error => {
@@ -222,10 +226,9 @@ export class CandidateUpdatePage implements OnInit {
 
     if (this.avatarUrl) {
       const avatarBlob = await this.convertImagePathToBlob(this.avatarUrl)
-      const userUid = localStorage.getItem('user_uid')
 
       const uploadTask = this.storage.upload(
-        `files/candidates/profile_photos/${userUid}`,
+        `files/candidates/profile_photos/${this.user.uid}`,
         avatarBlob
       )
 

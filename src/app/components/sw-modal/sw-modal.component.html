@@ -7,9 +7,20 @@
     class="sw-button"
     expand="block"
     color="light"
+    (click)="profile_updated ? user_type === 'candidate' ? goToUpdateCandidate() : goToUpdateContractor() : dismiss()"
+  >
+    {{ profile_updated ? 'Sim' : 'Ok' }}
+    <ion-icon slot="end" name="arrow-forward-circle-outline"></ion-icon>
+  </ion-button>
+
+  <ion-button
+    *ngIf="profile_updated"
+    class="sw-button"
+    expand="block"
+    color="light"
     (click)="dismiss()"
   >
-    Ok
-    <ion-icon slot="end" name="arrow-forward-circle-outline"></ion-icon>
+    Cancelar
+    <ion-icon slot="end" name="close-circle-outline"></ion-icon>
   </ion-button>
 </ion-card>

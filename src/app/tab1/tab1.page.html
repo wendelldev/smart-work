@@ -1,17 +1,122 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title>Perfil profissional</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-card *ngIf="user">
+    <ion-card-header>
+      <ion-avatar>
+        <ion-icon *ngIf="!user.avatar_url" name="person-outline"></ion-icon>
+        <img *ngIf="user.avatar_url" [src]="user.avatar_url">
+      </ion-avatar>
+    </ion-card-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+    <ion-item lines="none">
+      <ion-text color="secondary">Nome</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-text color="medium">{{ user.name }}</ion-text>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-text color="secondary">Email</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-text color="medium">{{ user.email }}</ion-text>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-text color="secondary">LinkedIn</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-text color="medium">{{ user.linkedInUrl || 'Não informado' }}</ion-text>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-text color="secondary">Data de nascimento</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-text color="medium">{{ user.birthday }}</ion-text>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-text color="secondary">Telefone residencial</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-text color="medium">{{ user.residencial_phone || 'Não informado' }}</ion-text>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-text color="secondary">Telefone celular</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-text color="medium">{{ user.mobile_phone }}</ion-text>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-text color="secondary">Estado</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-text color="medium">{{ state?.name || 'Não informado' }}</ion-text>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-text color="secondary">Cidade</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-text color="medium">{{ city?.name || 'Não informado' }}</ion-text>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-text color="secondary">Escolaridade</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-text color="medium">{{ user.scholarity }}</ion-text>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-text color="secondary">Área de atuação</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-text color="medium">{{ user.actuation_area }}</ion-text>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-text color="secondary">Qualificações</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-text color="medium">{{ user.qualifications }}</ion-text>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-text color="secondary">Experiência de trabalho</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-text color="medium">{{ user.experience }}</ion-text>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-text color="secondary">Carta de apresentação</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-text color="medium">{{ user.presentation_text || 'Não informado' }}</ion-text>
+    </ion-item>
+
+  </ion-card>
+
+  <ion-button
+    *ngIf="user"
+    class="sw-button outside-form"
+    color="light"
+    expand="block"
+  >
+    Editar dados
+    <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+  </ion-button>
+
+
+  <ion-text *ngIf="!user">Sem perfil</ion-text>
+
 </ion-content>

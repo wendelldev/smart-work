@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AnimationController, Animation, LoadingController } from '@ionic/angular';
 import { ToastService } from 'src/app/services/toast.service';
+import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -31,7 +32,8 @@ export class LoginPage implements AfterViewInit {
     private authService: AuthenticationService,
     private alert: ToastService,
     private loadingService: LoadingService,
-    private loadingControl: LoadingController
+    private loadingControl: LoadingController,
+    private storage: Storage
 
   ) {
     this.loginForm = this.formBuilder.group({
@@ -102,22 +104,21 @@ export class LoginPage implements AfterViewInit {
     
     this.authService.SignIn(email, password)
       .then(res => {
-        localStorage.setItem('user', JSON.stringify(res.user))
+        this.storage.set('user', JSON.stringify(res.user))
         if (res.user.emailVerified) {
           this.authService.getUserData(res.user.uid, 'candidates').then(res => {
             if (res.val()) {
-              console.log(res.val())
-              localStorage.setItem('user_data', JSON.stringify(res.val()))
+              this.storage.set('user_data', JSON.stringify(res.val()))
               this.loadingControl.dismiss()
-              this.router.navigate(['/tabs'])
+              this.router.navigate(['/tabs/tab1'])
             }
           })
 
           this.authService.getUserData(res.user.uid, 'contractors').then(res => {
             if (res.val()) {
-              localStorage.setItem('user_data', JSON.stringify(res.val()))
+              this.storage.set('user_data', JSON.stringify(res.val()))
               this.loadingControl.dismiss()
-              this.router.navigate(['/tabs'])
+              this.router.navigate(['/tabs/tab1'])
             }
           })
           

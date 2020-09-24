@@ -1,0 +1,36 @@
+ion-content {
+    --background: var(--ion-color-secondary)
+}
+
+ion-avatar {
+    width: 120px;
+    height: 120px;
+    background: var(--ion-color-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ion-icon {
+        color: var(--ion-color-dark);
+        font-size: 50px;
+    }
+}
+
+ion-card {
+    margin: 0 auto;
+    border-radius: 10px;
+    width: 90%;
+    padding-bottom: 20px;
+
+    ion-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+
+.sw-button.outside-form {
+    width: 90%;
+    margin: 10px auto;
+}

@@ -1,3 +1,4 @@
+import { SwModalComponent } from './../components/sw-modal/sw-modal.component';
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -15,6 +16,6 @@ import { Tab1PageRoutingModule } from './tab1-routing.module';
     ExploreContainerComponentModule,
     Tab1PageRoutingModule
   ],
-  declarations: [Tab1Page]
+  declarations: [Tab1Page, SwModalComponent]
 })
 export class Tab1PageModule {}

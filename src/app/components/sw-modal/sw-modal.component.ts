@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -8,14 +9,28 @@ import { ModalController } from '@ionic/angular';
 })
 export class SwModalComponent implements OnInit {
 
+  @Input() text: string
+  @Input() profile_updated: boolean
+  @Input() user_type: string
+
   constructor(
-    private modalControl: ModalController
+    private modalControl: ModalController,
+    private router: Router
   ) { }
 
   ngOnInit() {}
 
   dismiss() {
     this.modalControl.dismiss()
+  }
+
+  goToUpdateCandidate() {
+    this.router.navigate(['/candidate-update'])
+    this.modalControl.dismiss()
+  }
+
+  goToUpdateContractor() {
+
   }
 
 }
