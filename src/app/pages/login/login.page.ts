@@ -113,6 +113,10 @@ export class LoginPage implements AfterViewInit {
               this.router.navigate(['/tabs/tab1'])
             }
           })
+          .catch(error => {
+            this.loadingControl.dismiss()
+            this.alert.presentToast('Dados do usuário não encontrados.', 'bottom', 'danger')
+          })
 
           this.authService.getUserData(res.user.uid, 'contractors').then(res => {
             if (res.val()) {
@@ -120,6 +124,10 @@ export class LoginPage implements AfterViewInit {
               this.loadingControl.dismiss()
               this.router.navigate(['/tabs/tab1'])
             }
+          })
+          .catch(error => {
+            this.loadingControl.dismiss()
+            this.alert.presentToast('Dados do usuário não encontrados.', 'bottom', 'danger')
           })
           
         } else {
