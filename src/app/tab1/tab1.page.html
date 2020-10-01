@@ -66,10 +66,9 @@
 
       <ion-text color="secondary" *ngIf="userData.experiences.length > 0">Experiência de trabalho</ion-text>
       <div class="experiences" *ngIf="userData.experiences.length > 0">
-        <ion-item class="styled" lines="none" *ngFor="let experience of userData.experiences; let i = index">
+        <ion-item class="styled" lines="none" *ngFor="let experience of userData.experiences">
           <ion-icon slot="start" name="business-outline"></ion-icon>
           <ion-label class="styled">{{ experience.company_name }}</ion-label>
-          <ion-icon slot="end" name="trash-outline" (click)="removeExperience(i)"></ion-icon>
         </ion-item>
         <ion-item lines="none" *ngIf="userData.experiences.length === 0">
           <ion-label color="secondary" position="stacked">Experiência de trabalho</ion-label>

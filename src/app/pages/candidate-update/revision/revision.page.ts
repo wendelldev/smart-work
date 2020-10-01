@@ -49,6 +49,7 @@ export class RevisionPage implements OnInit {
 
   removeExperience(id: any) {
     this.userData.experiences.splice(id, 1)
+    this.localStorage.set('experiences', JSON.stringify(this.userData.experiences))
   }
 
   goToInit() {

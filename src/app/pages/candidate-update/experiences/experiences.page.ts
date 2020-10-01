@@ -23,17 +23,16 @@ export class ExperiencesPage implements OnInit {
     private modalControl: ModalController
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.candidateForm = this.formBuilder.group({
       experiences: [[]]
     })
-  }
-  
-  async ionViewWillEnter() {
+
     await this.localStorage.get('user_data')
       .then(data => {
         this.userData = JSON.parse(data)
         this.candidateForm.patchValue(this.userData)
+        this.localStorage.set('experiences', JSON.stringify(this.userData.experiences))
       })
   }
 
@@ -41,6 +40,7 @@ export class ExperiencesPage implements OnInit {
     let newExperiences = this.candidateForm.get('experiences').value
     newExperiences.splice(id, 1)
     this.candidateForm.get('experiences').setValue(newExperiences)
+    this.localStorage.set('experiences', JSON.stringify(newExperiences))
   }
 
   async experienceModal() {
