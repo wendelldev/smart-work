@@ -25,6 +25,10 @@ const routes: Routes = [
     path: 'candidate-update',
     loadChildren: () => import('./pages/candidate-update/candidate-update.module').then( m => m.CandidateUpdatePageModule)
   },
+  {
+    path: 'experience-modal',
+    loadChildren: () => import('./pages/experience-modal/experience-modal.module').then( m => m.ExperienceModalPageModule)
+  },
 
 ];
 @NgModule({

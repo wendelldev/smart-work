@@ -10,6 +10,7 @@ import { Camera } from '@ionic-native/camera/ngx'
 import { File } from '@ionic-native/file/ngx'
 import { WebView } from '@ionic-native/ionic-webview/ngx'
 import { Crop } from '@ionic-native/crop/ngx'
+import { Keyboard } from '@ionic-native/keyboard/ngx'
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -43,6 +44,7 @@ import { HttpClientModule } from '@angular/common/http';
     File,
     WebView,
     Crop,
+    Keyboard,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

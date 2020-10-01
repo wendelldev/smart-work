@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Experiência de trabalho</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="experience-form" [formGroup]="experienceForm" novalidate>
+
+    <ion-item class="styled" lines="none">
+      <ion-input formControlName="company_name" type="text" placeholder="Local onde trabalhou"></ion-input>
+      <ion-icon slot="start" name="business-outline"></ion-icon>
+    </ion-item>
+
+    <ion-item class="no-style" lines="none">
+      <ion-item class="styled date-begin" lines="none">
+        <ion-input formControlName="begin_date" type="tel" placeholder="Data de início" [brmasker]="{mask: '00/00/0000', type: 'num', len:10}"></ion-input>
+        <ion-icon slot="start" name="calendar-outline"></ion-icon>
+      </ion-item>
+      <ion-item class="styled date-end" lines="none">
+        <ion-input formControlName="end_date" type="tel" placeholder="Data de saída" [brmasker]="{mask: '00/00/0000', type: 'num', len:10}"></ion-input>
+        <ion-icon slot="start" name="calendar-outline"></ion-icon>
+      </ion-item>
+    </ion-item>
+
+    <ion-item class="styled" lines="none">
+      <ion-input formControlName="occupation" type="text" placeholder="Cargo"></ion-input>
+      <ion-icon slot="start" name="business-outline"></ion-icon>
+    </ion-item>
+
+    <ion-item class="styled" lines="none">
+      <ion-textarea formControlName="observation" rows="4" autoGrow="true" placeholder="Observações"></ion-textarea>
+    </ion-item>
+
+    <ion-button
+      [disabled]="experienceForm.invalid"
+      class="sw-button"
+      color="light"
+      expand="block"
+      (click)="addExperience()"
+    >
+      Adicionar
+      <ion-icon slot="end" name="add-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button
+      class="sw-button"
+      color="light"
+      expand="block"
+      (click)="cancel()"
+    >
+      Cancelar
+      <ion-icon slot="end" name="close-outline"></ion-icon>
+    </ion-button>
+  </form>
+</ion-content>

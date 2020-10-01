@@ -1,17 +1,44 @@
-ion-slides {
-    height: 100%;
-    background: var(--ion-color-secondary);
+
+form.experience-form {
+    padding: 5vw;
+
+    ion-item.styled {
+        --padding-start: 12px;
+        --highlight-height: 2px;
+        margin-bottom: 20px;
+        box-shadow: 0px 0px 2px 1px #4c8dff;
+        border-radius: 8px;
+        
+
+        ion-icon {
+            font-size: 18px;
+            margin-right: 8px;
+            padding-right: 8px;
+        }
+
+        ion-icon[slot=start] {
+            border-right: 1px solid var(--ion-color-medium);
+        }
+    }
+
+    ion-item.date-begin {
+        margin-right: 10px;
+    }
+
+    ion-item.date-end {
+        margin-left: 10px;
+    }
 }
 
-ion-slide {
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
+// All
+ion-content {
+    --background: var(--ion-color-secondary);
 }
 
 h3.wrapper, p.text-wrapper {
     color: var(--ion-color-light);
     margin-bottom: 15px;
+    text-align: center;
 }
 
 p.text-wrapper-justify {
@@ -20,13 +47,18 @@ p.text-wrapper-justify {
 
 .sw-form {
     padding: 5vw;
-    width: 90%;
-    overflow-y: scroll;
 }
 
+.sw-button.outside-form {
+    width: 90%;
+    margin: 10px auto;
+}
+
+// Avatar Profile
 ion-avatar {
     width: 120px;
     height: 120px;
+    margin: 10px auto;
     background: var(--ion-color-light);
     display: flex;
     align-items: center;
@@ -39,26 +71,50 @@ ion-avatar {
 }
 
 .progress {
-    margin: 20px;
+    margin: 20px auto;
     width: 70%;
 }
 
+
+
+// Revision
 ion-card {
     border-radius: 10px;
-    overflow-y: scroll;
     width: 90%;
-    padding-bottom: 20px;
+    margin: 10px auto;
+    padding-bottom: 10pxpx;
 
     ion-card-header {
         display: flex;
         align-items: center;
         justify-content: center;
     }
-}
 
-
-.sw-button.outside-form {
-    width: 90%;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    ion-card-content {
+        display: flex;
+        flex-direction: column;
+    
+        ion-item {
+            --background: #F1F1F1;
+            --padding-start: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+    
+            ion-label {
+                margin-bottom: 10px;
+            }
+    
+            ion-text {
+                width: 100%;
+                font-size: 16px;
+            }
+        }
+    
+        .experiences {
+            margin-top: 10px;
+            ion-label {
+                margin-top: 10px;
+            }
+        }
+    }
 }

@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Atualização de perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="sw-form" [formGroup]="candidateForm" novalidate>
+    <h3 class="wrapper">Contato</h3>
+      <ion-item lines="none">
+        <ion-input formControlName="residencial_phone" type="tel" placeholder="Telefone residencial" [brmasker]="{phone: true}"></ion-input>
+        <ion-icon name="call-outline" slot="start"></ion-icon>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-input formControlName="mobile_phone" type="tel" placeholder="Telefone celular" [brmasker]="{phone: true}"></ion-input>
+        <ion-icon slot="start" name="call-outline"></ion-icon>
+      </ion-item>
+
+      <ion-button
+        [disabled]="candidateForm.get('mobile_phone').invalid"
+        class="sw-button"
+        color="light"
+        expand="block"
+        (click)="nextPage()"
+      >
+        Próximo
+        <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+      </ion-button>
+  </form>
+</ion-content>

@@ -108,6 +108,7 @@ export class LoginPage implements AfterViewInit {
         if (res.user.emailVerified) {
           this.authService.getUserData(res.user.uid, 'candidates').then(res => {
             if (res.val()) {
+              this.storage.set('user_type', res.val().user_type)
               this.storage.set('user_data', JSON.stringify(res.val()))
               this.loadingControl.dismiss()
               this.router.navigate(['/tabs/tab1'])
@@ -115,11 +116,11 @@ export class LoginPage implements AfterViewInit {
           })
           .catch(error => {
             this.loadingControl.dismiss()
-            this.alert.presentToast('Dados do usuário não encontrados.', 'bottom', 'danger')
           })
 
           this.authService.getUserData(res.user.uid, 'contractors').then(res => {
             if (res.val()) {
+              this.storage.set('user_type', res.val().user_type)
               this.storage.set('user_data', JSON.stringify(res.val()))
               this.loadingControl.dismiss()
               this.router.navigate(['/tabs/tab1'])
@@ -127,7 +128,6 @@ export class LoginPage implements AfterViewInit {
           })
           .catch(error => {
             this.loadingControl.dismiss()
-            this.alert.presentToast('Dados do usuário não encontrados.', 'bottom', 'danger')
           })
           
         } else {

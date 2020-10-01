@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Atualização de perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="sw-form" [formGroup]="candidateForm" novalidate>
+    <h3 class="wrapper">Qualificações</h3>
+    <p class="text-wrapper text-wrapper-justify">Nos conte que qualificações você possui, como cursos ou habilidades que você sabe e possa chamar a atenção de um possível contratante.</p>
+    <p class="text-wrapper text-wrapper-justify">Atenção: Para cursos informados, talvez seja necessário comprovação com certificado, é o contratante quem decide isso.</p>
+    <ion-item lines="none">
+      <ion-textarea formControlName="qualifications" rows="4" autoGrow="true" placeholder="Qualificações*"></ion-textarea>
+    </ion-item>
+
+      <ion-button
+        [disabled]="candidateForm.get('qualifications').invalid"
+        class="sw-button"
+        color="light"
+        expand="block"
+        (click)="nextPage()"
+      >
+        Próximo
+        <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+      </ion-button>
+  </form>
+</ion-content>

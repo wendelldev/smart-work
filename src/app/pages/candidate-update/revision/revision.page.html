@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar color="secondary">
-    <ion-title>Perfil profissional</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Atualização de perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -88,17 +91,22 @@
   </ion-card>
 
   <ion-button
-    *ngIf="userData"
     class="sw-button outside-form"
     color="light"
     expand="block"
-    (click)="goToUpdateCandidate()"
+    (click)="goToInit()"
   >
-    Editar dados
+    Alterar dados
     <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
   </ion-button>
 
-
-  <ion-text *ngIf="!userData">Sem perfil</ion-text>
-
+  <ion-button
+    class="sw-button outside-form"
+    color="light"
+    expand="block"
+    (click)="saveData()"
+  >
+    Salvar
+    <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+  </ion-button>
 </ion-content>

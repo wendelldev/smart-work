@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Atualização de perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="experience-form" novalidate>
+    <h3 class="wrapper">Experiência de trabalho</h3>
+    <p class="text-wrapper text-wrapper-justify">Liste suas experiências profissionais, sejam elas de estágio, carteira assinada ou freelancer. Tente inserir o período em que ficou nessas atividades.</p>
+
+    <div class="experiences" *ngIf="candidateForm.get('experiences').value.length > 0">
+      <ion-item class="styled" lines="none" *ngFor="let experience of candidateForm.get('experiences').value; let i = index">
+        <ion-icon slot="start" name="business-outline"></ion-icon>
+        <ion-label>{{ experience.company_name }}</ion-label>
+        <ion-icon slot="end" name="trash-outline" (click)="removeExperience(i)"></ion-icon>
+      </ion-item>
+    </div>
+
+    <ion-button
+      class="sw-button"
+      color="light"
+      expand="block"
+      (click)="experienceModal()"
+    >
+      Adicionar
+      <ion-icon slot="end" name="add-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button
+      class="sw-button"
+      color="light"
+      expand="block"
+      (click)="nextPage()"
+    >
+      {{ candidateForm.get('experiences').value.length > 0 ? 'Próximo' : 'Pular' }}
+      <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+    </ion-button>
+  </form>
+</ion-content>

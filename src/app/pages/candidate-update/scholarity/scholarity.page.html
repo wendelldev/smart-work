@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Atualização de perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="sw-form" [formGroup]="candidateForm" novalidate>
+    <h3 class="wrapper">Qual sua escolaridade?</h3>
+    <p class="text-wrapper">Também informe qual sua área de atuação/profissão.</p>
+    <ion-item lines="none">
+      <ion-icon slot="start" name="book-outline"></ion-icon>
+      <ion-select
+        placeholder="Escolaridade*" 
+        formControlName="scholarity"
+        okText="Ok"
+        cancelText="Cancelar"
+        interface="action-sheet"
+      >
+        <ion-select-option value="Nenhuma">Nenhuma</ion-select-option>
+        <ion-select-option value="Fundamental Incompleto">Ensino Fundamental Incompleto</ion-select-option>
+        <ion-select-option value="Fundamental">Ensino Fundamental Completo</ion-select-option>
+        <ion-select-option value="Médio Incompleto">Ensino Médio Incompleto</ion-select-option>
+        <ion-select-option value="Médio Completo">Ensino Médio Completo</ion-select-option>
+        <ion-select-option value="Superior Incompleto">Ensino Superior Incompleto</ion-select-option>
+        <ion-select-option value="Superior Completo">Ensino Superior Completo</ion-select-option>
+        <ion-select-option value="Mestrado Incompleto">Mestrado Incompleto</ion-select-option>
+        <ion-select-option value="Mestrado Completo">Mestrado Completo</ion-select-option>
+        <ion-select-option value="Doutorado Incompleto">Doutorado Incompleto</ion-select-option>
+        <ion-select-option value="Doutorado Completo">Doutorado Completo</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-textarea formControlName="actuation_area" rows="4" autoGrow="true" placeholder="Área de atuação*"></ion-textarea>
+    </ion-item>
+
+    <ion-button
+      [disabled]="candidateForm.get('scholarity').invalid || candidateForm.get('actuation_area').invalid"
+      class="sw-button"
+      color="light"
+      expand="block"
+      (click)="nextPage()"
+    >
+      Próximo
+      <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+    </ion-button>
+  </form>
+</ion-content>

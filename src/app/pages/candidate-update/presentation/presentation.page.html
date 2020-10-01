@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Atualização de perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="sw-form" [formGroup]="candidateForm" novalidate>
+    <h3 class="wrapper">Carta de apresentação</h3>
+    <p class="text-wrapper text-wrapper-justify">Aconselhamos você a preencher esse campo, porém, você pode pular se preferir.</p>
+    <p class="text-wrapper text-wrapper-justify">Um bom texto de apresentação pode fazer toda a diferença em ser contratado ou não.</p>
+    <ion-item lines="none">
+      <ion-textarea formControlName="presentation_text" rows="6" autoGrow="true" placeholder="Carta de apresentação"></ion-textarea>
+    </ion-item>
+
+    <ion-button
+      class="sw-button"
+      color="light"
+      expand="block"
+      (click)="nextPage()"
+    >
+      Concluir
+      <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+    </ion-button>
+  </form>
+</ion-content>

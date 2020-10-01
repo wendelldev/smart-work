@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthenticationService } from './../services/authentication.service';
 import { LocationService } from './../services/location.service';
 import { SwModalComponent } from './../components/sw-modal/sw-modal.component';
@@ -14,7 +15,7 @@ import { Storage } from '@ionic/storage';
 })
 export class Tab1Page {
 
-  user = null
+  userData = null
   state = null
   city = null
 
@@ -25,7 +26,8 @@ export class Tab1Page {
     private authService: AuthenticationService,
     private loadingService: LoadingService,
     private loadingControl: LoadingController,
-    private storage: Storage
+    private storage: Storage,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -33,28 +35,39 @@ export class Tab1Page {
 
   async ionViewWillEnter() {
     this.loadingService.presentLoadingDefault()
-    await this.storage.get('user_data')
-      .then(data => {
-        const userData = JSON.parse(data)
-        this.authService.getUserData(userData.uid, userData.user_type + 's')
-          .then(res => {
-              this.user = res.val()
+    await this.storage.get('user')
+      .then(async user => {
+        const userData = JSON.parse(user)
+        await this.storage.get('user_type')
+          .then(type => {
+            this.authService.getUserData(userData.uid, type + 's')
+              .then(res => {
+                this.userData = res.val()
 
-              this.location.getStateById(this.user.state_id).subscribe(
-                data => this.state = data[0]
-              )
+                this.location.getStateById(this.userData.state_id).subscribe(
+                  data => this.state = data[0]
+                )
           
-              this.location.getCityById(this.user.city_id).subscribe(
-                data => this.city = data[0]
-              )
+                this.location.getCityById(this.userData.city_id).subscribe(
+                  data => this.city = data[0]
+                )
 
-              if (!this.user.profile_updated) {
-                this.openModal('Bem vindo, você gostaria de preencher seu perfil profissional agora?', true, this.user.user_type)
-              }
+                if (!this.userData.profile_updated) {
+                  this.openModal('Bem vindo, você gostaria de preencher seu perfil profissional agora?', true, this.userData.user_type)
+                }
 
-              this.loadingControl.dismiss()
+                this.loadingControl.dismiss()
+              })
+              .catch(error => {
+                this.loadingControl.dismiss()
+                this.alert.presentToast(error.message, 'bottom', 'danger')
+              })
           })
       })
+  }
+
+  goToUpdateCandidate() {
+    this.router.navigate(['/candidate-update/avatar-profile'], { queryParams: { update: 'true' } })
   }
 
   async openModal(text: string, profile_updated: boolean, user_type: string) {

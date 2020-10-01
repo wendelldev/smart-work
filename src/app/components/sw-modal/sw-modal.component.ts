@@ -25,7 +25,7 @@ export class SwModalComponent implements OnInit {
   }
 
   goToUpdateCandidate() {
-    this.router.navigate(['/candidate-update'])
+    this.router.navigate(['/candidate-update/avatar-profile'])
     this.modalControl.dismiss()
   }
 

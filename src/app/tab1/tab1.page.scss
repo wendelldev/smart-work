@@ -17,15 +17,43 @@ ion-avatar {
 }
 
 ion-card {
-    margin: 0 auto;
     border-radius: 10px;
     width: 90%;
-    padding-bottom: 20px;
+    margin: 10px auto;
+    padding-bottom: 10pxpx;
 
     ion-card-header {
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    ion-card-content {
+        display: flex;
+        flex-direction: column;
+    
+        ion-item {
+            --background: #F1F1F1;
+            --padding-start: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+    
+            ion-label {
+                margin-bottom: 10px;
+            }
+    
+            ion-text {
+                width: 100%;
+                font-size: 16px;
+            }
+        }
+    
+        .experiences {
+            margin-top: 10px;
+            ion-label {
+                margin-top: 10px;
+            }
+        }
     }
 }
 
