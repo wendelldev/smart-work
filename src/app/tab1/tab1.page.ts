@@ -7,6 +7,7 @@ import { LoadingController, ModalController } from '@ionic/angular';
 import { ToastService } from '../services/toast.service';
 import { LoadingService } from '../services/loading.service';
 import { Storage } from '@ionic/storage';
+import * as moment from 'moment'
 
 @Component({
   selector: 'app-tab1',
@@ -64,6 +65,13 @@ export class Tab1Page {
               })
           })
       })
+  }
+
+  formatDate(dateTime: string) {
+    moment.locale('pt-br')
+    let time = moment(dateTime).format('DD/MM/YYYY')
+
+    return time
   }
 
   goToUpdateCandidate() {

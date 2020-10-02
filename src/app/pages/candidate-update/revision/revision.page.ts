@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { ToastService } from 'src/app/services/toast.service';
+import * as moment from 'moment'
 
 @Component({
   selector: 'app-revision',
@@ -45,6 +46,13 @@ export class RevisionPage implements OnInit {
       data => this.city = data[0],
       error => this.alert.presentToast(error.message, 'bottom', 'danger')
     )
+  }
+
+  formatDate(dateTime: string) {
+    moment.locale('pt-br')
+    let time = moment(dateTime).format('DD/MM/YYYY')
+
+    return time
   }
 
   removeExperience(id: any) {

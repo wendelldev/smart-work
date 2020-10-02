@@ -21,8 +21,8 @@
       </ion-item>
 
       <ion-item lines="none">
-        <ion-input formControlName="birthday" type="tel" placeholder="Data de nascimento" [brmasker]="{mask: '00/00/0000', type: 'num', len:10}"></ion-input>
         <ion-icon slot="start" name="calendar-outline"></ion-icon>
+        <ion-datetime formControlName="birthday" displayFormat="DD/MM/YYYY" min="1910" max="2006" placeholder="Data de nascimento" cancelable="false"></ion-datetime>
       </ion-item>
 
       <ion-button
