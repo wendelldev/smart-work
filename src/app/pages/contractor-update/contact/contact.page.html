@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Atualização de perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="sw-form" [formGroup]="contractorForm" novalidate>
+    <h3 class="wrapper">Dados da empresa e de contato.</h3>
+      <ion-item lines="none">
+        <ion-input formControlName="name" type="text" placeholder="Nome completo"></ion-input>
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-input formControlName="email" type="text" placeholder="Email"></ion-input>
+        <ion-icon slot="start" name="mail"></ion-icon>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-input formControlName="comercial_phone" type="text" placeholder="Telefone comercial" [brmasker]="{phone: true}"></ion-input>
+        <ion-icon slot="start" name="call"></ion-icon>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-input formControlName="cnpj_cpf" type="text" placeholder="CPF ou CNPJ" [brmasker]="{person: true}"></ion-input>
+        <ion-icon slot="start" name="card"></ion-icon>
+      </ion-item>
+
+      <ion-button
+        [disabled]="contractorForm.invalid"
+        class="sw-button"
+        color="light"
+        expand="block"
+        (click)="nextPage()"
+      >
+        Próximo
+        <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+      </ion-button>
+  </form>
+</ion-content>

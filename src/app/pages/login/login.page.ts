@@ -96,54 +96,52 @@ export class LoginPage implements AfterViewInit {
      this.showPass = !this.showPass
   }
 
-  doLogin() {
-    this.loadingService.presentLoadingDefault()
-
+  async doLogin() {
+    await this.loadingService.presentLoadingDefault()
     const email = this.loginForm.get('email').value
     const password = this.loginForm.get('password').value
     
     this.authService.SignIn(email, password)
-      .then(res => {
-        this.storage.set('user', JSON.stringify(res.user))
-        if (res.user.emailVerified) {
-          this.authService.getUserData(res.user.uid, 'candidates').then(res => {
+      .then(async response => {
+        this.storage.set('user', JSON.stringify(response.user))
+        if (response.user.emailVerified) {
+          this.authService.getUserData(response.user.uid, 'candidates').then(res => {
             if (res.val()) {
               this.storage.set('user_type', res.val().user_type)
               this.storage.set('user_data', JSON.stringify(res.val()))
               this.loadingControl.dismiss()
-              this.router.navigate(['/tabs/tab1'])
+              this.router.navigate(['/tabs/vacancies'])
+            } else {
+              this.authService.getUserData(response.user.uid, 'contractors').then(res => {
+                if (res.val()) {
+                  this.storage.set('user_type', res.val().user_type)
+                  this.storage.set('user_data', JSON.stringify(res.val()))
+                  this.loadingControl.dismiss()
+                  this.router.navigate(['/tabs/resumes'])
+                }
+              })
+              .catch(async error => {
+                await this.loadingControl.dismiss()
+              })
             }
           })
-          .catch(error => {
-            this.loadingControl.dismiss()
+          .catch(async error => {
+            await this.loadingControl.dismiss()
           })
-
-          this.authService.getUserData(res.user.uid, 'contractors').then(res => {
-            if (res.val()) {
-              this.storage.set('user_type', res.val().user_type)
-              this.storage.set('user_data', JSON.stringify(res.val()))
-              this.loadingControl.dismiss()
-              this.router.navigate(['/tabs/tab1'])
-            }
-          })
-          .catch(error => {
-            this.loadingControl.dismiss()
-          })
-          
         } else {
-          this.loadingControl.dismiss()
+          await this.loadingControl.dismiss()
           this.router.navigate(['/email-verification'])
           this.alert.presentToast('Verifique seu email.')
         }
       })
-      .catch(error => {
-        this.loadingControl.dismiss()
+      .catch(async error => {
+        await this.loadingControl.dismiss()
         if (error.code === "auth/user-not-found") {
-          this.alert.presentToast('Email não cadastrado.', 'bottom', 'danger')
-        } else  if (error.code === "auth/wrong-password") {
+          this.alert.presentToast('Email não cadastrado', 'bottom', 'danger')
+        } else if (error.code === "auth/wrong-password") {
           this.alert.presentToast('Senha incorreta para o email informado.', 'bottom', 'danger')
-        } else {
-          this.alert.presentToast('Algo deu errado, verifique sua conexão com a internet.', 'bottom', 'danger')
+        } else if (error.code === "auth/network-request-failed") {
+          this.alert.presentToast('Falha na conexão, verifique sua internet e tente novamente.', 'bottom', 'danger')
         }
       })
   }

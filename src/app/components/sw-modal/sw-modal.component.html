@@ -7,9 +7,9 @@
     class="sw-button"
     expand="block"
     color="light"
-    (click)="profile_updated ? user_type === 'candidate' ? goToUpdateCandidate() : goToUpdateContractor() : dismiss()"
+    (click)="goToUpdate()"
   >
-    {{ profile_updated ? 'Sim' : 'Ok' }}
+    {{ profile_updated ? 'Vamos lá' : 'Ok' }}
     <ion-icon slot="end" name="arrow-forward-circle-outline"></ion-icon>
   </ion-button>
 

@@ -9,7 +9,8 @@ const routes: Routes = [
   {
     path: 'tabs',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
-  },  {
+  },
+  {
     path: 'registration',
     loadChildren: () => import('./pages/registration/registration.module').then( m => m.RegistrationPageModule)
   },
@@ -28,6 +29,18 @@ const routes: Routes = [
   {
     path: 'experience-modal',
     loadChildren: () => import('./pages/experience-modal/experience-modal.module').then( m => m.ExperienceModalPageModule)
+  },
+  {
+    path: 'candidate-profile',
+    loadChildren: () => import('./pages/candidate-profile/candidate-profile.module').then( m => m.CandidateProfilePageModule)
+  },
+  {
+    path: 'contractor-profile',
+    loadChildren: () => import('./pages/contractor-profile/contractor-profile.module').then( m => m.ContractorProfilePageModule)
+  },
+  {
+    path: 'contractor-update',
+    loadChildren: () => import('./pages/contractor-update/contractor-update.module').then( m => m.ContractorUpdatePageModule)
   },
 
 ];

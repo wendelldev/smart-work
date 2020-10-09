@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngIf="userData">
+    <ion-card-header>
+      <ion-avatar>
+        <ion-icon *ngIf="!userData.avatar_url" name="person-outline"></ion-icon>
+        <img *ngIf="userData.avatar_url" [src]="userData.avatar_url">
+      </ion-avatar>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-label color="secondary" position="stacked">Nome:</ion-label>
+        <ion-text color="medium">{{ userData.name }}</ion-text>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label color="secondary" position="stacked">Email</ion-label>
+        <ion-text color="medium">{{ userData.email }}</ion-text>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label color="secondary" position="stacked">Telefone</ion-label>
+        <ion-text color="medium">{{ userData.comercial_phone }}</ion-text>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label color="secondary" position="stacked">CPF/CNPJ</ion-label>
+        <ion-text color="medium">{{ userData.cnpj_cpf }}</ion-text>
+      </ion-item>
+      
+      <ion-item lines="none">
+        <ion-label color="secondary" position="stacked">Estado</ion-label>
+        <ion-text color="medium">{{ state?.name || 'Não informado' }}</ion-text>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label color="secondary" position="stacked">Cidade</ion-label>
+        <ion-text color="medium">{{ city?.name || 'Não informado' }}</ion-text>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label color="secondary" position="stacked">Bairro</ion-label>
+        <ion-text color="medium">{{ userData.neighborhood }}</ion-text>
+      </ion-item>
+      
+      <ion-item lines="none">
+        <ion-label color="secondary" position="stacked">Rua</ion-label>
+        <ion-text color="medium">{{ userData.street }}</ion-text>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label color="secondary" position="stacked">Número</ion-label>
+        <ion-text color="medium">{{ userData.number }}</ion-text>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label color="secondary" position="stacked">Descrição</ion-label>
+        <ion-text color="medium">{{ userData.description }}</ion-text>
+      </ion-item>
+
+    </ion-card-content>
+
+
+  </ion-card>
+
+  <ion-button
+    *ngIf="userData"
+    class="sw-button outside-form"
+    color="light"
+    expand="block"
+    (click)="goToUpdateContractor()"
+  >
+    Alterar dados
+    <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+  </ion-button>
+
+</ion-content>

@@ -1,34 +1,3 @@
-
-form.experience-form {
-    padding: 5vw;
-
-    ion-item.styled {
-        --padding-start: 12px;
-        --highlight-height: 2px;
-        margin-bottom: 20px;
-        box-shadow: 0px 0px 2px 1px #4c8dff;
-        border-radius: 8px;
-        
-        ion-icon {
-            font-size: 18px;
-            margin-right: 8px;
-            padding-right: 8px;
-        }
-
-        ion-icon[slot=start] {
-            border-right: 1px solid var(--ion-color-medium);
-        }
-    }
-
-    ion-item.date-begin {
-        margin-right: 10px;
-    }
-
-    ion-item.date-end {
-        margin-left: 10px;
-    }
-}
-
 // All
 ion-content {
     --background: var(--ion-color-secondary);
@@ -73,8 +42,6 @@ ion-avatar {
     margin: 20px auto;
     width: 70%;
 }
-
-
 
 // Revision
 ion-card {

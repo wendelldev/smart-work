@@ -1,17 +1,16 @@
-import { LocationService } from './../../../services/location.service';
-import { AuthenticationService } from './../../../services/authentication.service';
-import { LoadingService } from './../../../services/loading.service';
-import { Storage } from '@ionic/storage';
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { LoadingService } from 'src/app/services/loading.service';
+import { LocationService } from 'src/app/services/location.service';
 import { ToastService } from 'src/app/services/toast.service';
-import * as moment from 'moment'
 
 @Component({
   selector: 'app-revision',
   templateUrl: './revision.page.html',
-  styleUrls: ['../candidate-update.page.scss'],
+  styleUrls: ['../contractor-update.page.scss'],
 })
 export class RevisionPage implements OnInit {
 
@@ -48,35 +47,22 @@ export class RevisionPage implements OnInit {
     )
   }
 
-  formatDate(dateTime: string) {
-    moment.locale('pt-br')
-    let time = moment(dateTime).format('DD/MM/YYYY')
-
-    return time
-  }
-
-  removeExperience(id: any) {
-    this.userData.experiences.splice(id, 1)
-    this.localStorage.set('experiences', JSON.stringify(this.userData.experiences))
-  }
-
   goToInit() {
-    this.router.navigate(['/candidate-update/personal-info'])
+    this.router.navigate(['/contractor-update/contact'])
   }
 
-  saveData() {
-    this.loadingService.presentLoadingDefault()
+  async saveData() {
+    await this.loadingService.presentLoadingDefault()
     this.userData.profile_updated = true
     this.authService.updateUserData(this.user.uid, this.userData.user_type, this.userData)
-      .then(res => {
-        this.loadingControl.dismiss()
-        this.router.navigate(['/tabs/candidate-profile'])
+      .then(async res => {
+        await this.loadingControl.dismiss()
+        this.router.navigate(['/tabs/contractor-profile'])
         this.alert.presentToast('Usuário atualizado com sucesso.')
       })
-      .catch(error => {
-        console.log(error)
-        this.loadingControl.dismiss()
-        this.alert.presentToast(error, 'bottom', 'danger')
+      .catch(async error => {
+        await this.loadingControl.dismiss()
+        this.alert.presentToast(error.message, 'bottom', 'danger')
       })
   }
 

@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Atualização de perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="sw-form" [formGroup]="contractorForm" novalidate>
+    <h3 class="wrapper">Localização</h3>
+
+    <ion-item lines="none">
+      <ion-input formControlName="neighborhood" type="text" placeholder="Bairro"></ion-input>
+      <ion-icon slot="start" name="location"></ion-icon>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-input formControlName="street" type="text" placeholder="Rua" autocapitalize="words"></ion-input>
+      <ion-icon slot="start" name="location"></ion-icon>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-input formControlName="number" type="number" placeholder="Número"></ion-input>
+      <ion-icon slot="start" name="location"></ion-icon>
+    </ion-item>
+    
+    <ion-item lines="none">
+      <ion-icon slot="start" name="location"></ion-icon>
+      <ion-select
+        placeholder="Estado" 
+        (ionChange)="onStateChange($event)" 
+        formControlName="state_id"
+        okText="Ok"
+        cancelText="Cancelar"
+      >
+        <ion-select-option
+          *ngFor="let state of states"
+          [value]="state.id"
+        >{{ state.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-icon slot="start" name="location"></ion-icon>
+      <ion-select
+        placeholder="Cidade"
+        formControlName="city_id"
+        okText="Ok"
+        cancelText="Cancelar"
+      >
+        <ion-select-option
+          *ngFor="let city of cities"
+          [value]="city.id"
+        >{{ city.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button
+      [disabled]="contractorForm.invalid"
+      class="sw-button"
+      color="light"
+      expand="block"
+      (click)="nextPage()"
+    >
+      Próximo
+      <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+    </ion-button>
+</form>
+</ion-content>

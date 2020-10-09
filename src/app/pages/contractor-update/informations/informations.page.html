@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Atualização de perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="sw-form" [formGroup]="contractorForm" novalidate>
+    <h3 class="wrapper">Informações</h3>
+    <p class="text-wrapper text-wrapper-justify">Nos forneça uma descrição da sua empresa, ou do serviço que deseja contratar..</p>
+    <ion-item lines="none"> 
+      <ion-textarea formControlName="description" rows="4" autoGrow="true" placeholder="Descrição*"></ion-textarea>
+    </ion-item>
+
+      <ion-button
+        [disabled]="contractorForm.invalid"
+        class="sw-button"
+        color="light"
+        expand="block"
+        (click)="nextPage()"
+      >
+        Revisar
+        <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+      </ion-button>
+  </form>
+</ion-content>

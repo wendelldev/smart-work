@@ -1,20 +1,20 @@
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from './../services/authentication.service';
-import { LocationService } from './../services/location.service';
-import { SwModalComponent } from './../components/sw-modal/sw-modal.component';
-import { Component } from '@angular/core';
 import { LoadingController, ModalController } from '@ionic/angular';
-import { ToastService } from '../services/toast.service';
-import { LoadingService } from '../services/loading.service';
 import { Storage } from '@ionic/storage';
-import * as moment from 'moment'
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { LoadingService } from 'src/app/services/loading.service';
+import { LocationService } from 'src/app/services/location.service';
+import { ToastService } from 'src/app/services/toast.service';
+import * as moment from 'moment';
+import { SwModalComponent } from 'src/app/components/sw-modal/sw-modal.component';
 
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
+  selector: 'app-candidate-profile',
+  templateUrl: './candidate-profile.page.html',
+  styleUrls: ['./candidate-profile.page.scss'],
 })
-export class Tab1Page {
+export class CandidateProfilePage implements OnInit {
 
   userData = null
   state = null
@@ -35,14 +35,14 @@ export class Tab1Page {
   }
 
   async ionViewWillEnter() {
-    this.loadingService.presentLoadingDefault()
+    await this.loadingService.presentLoadingDefault()
     await this.storage.get('user')
       .then(async user => {
         const userData = JSON.parse(user)
         await this.storage.get('user_type')
           .then(type => {
             this.authService.getUserData(userData.uid, type + 's')
-              .then(res => {
+              .then(async res => {
                 this.userData = res.val()
 
                 this.location.getStateById(this.userData.state_id).subscribe(
@@ -57,10 +57,10 @@ export class Tab1Page {
                   this.openModal('Bem vindo, você gostaria de preencher seu perfil profissional agora?', true, this.userData.user_type)
                 }
 
-                this.loadingControl.dismiss()
+                await this.loadingControl.dismiss()
               })
-              .catch(error => {
-                this.loadingControl.dismiss()
+              .catch(async error => {
+                await this.loadingControl.dismiss()
                 this.alert.presentToast(error.message, 'bottom', 'danger')
               })
           })
