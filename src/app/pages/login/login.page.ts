@@ -126,6 +126,7 @@ export class LoginPage implements AfterViewInit {
             }
           })
           .catch(async error => {
+            console.log(error)
             await this.loadingControl.dismiss()
           })
         } else {

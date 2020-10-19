@@ -44,5 +44,16 @@
       Enviar imagem
       <ion-icon slot="end" name="cloud-upload-outline"></ion-icon>
     </ion-button>
+
+    <ion-button
+      *ngIf="uploadFinalized || update"
+      class="sw-button"
+      color="light"
+      expand="block"
+      (click)="goToRevision()"
+    >
+      Concluir
+      <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+    </ion-button>
   </form>
 </ion-content>
