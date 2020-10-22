@@ -25,37 +25,11 @@ export class ResumesPage implements OnInit {
   ngOnInit() {}
 
   async ionViewWillEnter() {
-    await this.loadingService.presentLoadingDefault()
-    await this.storage.get('user_type')
-      .then(async type => {
-        if (type === 'contractor') {
-          await this.storage.get('user')
-          .then(async user => {
-            const userData = JSON.parse(user)
-            this.authService.getUserData(userData.uid, type + 's')
-              .then(async (res: any) => {
-                await this.loadingControl.dismiss()
-                if (!res.val().profile_updated) {
-                  this.openModal('Bem vindo, você precisa preencher seu perfil para continuar usando o SmartWork', false, type)
-                }
-              })
-              .catch(async error => {
-                await this.loadingControl.dismiss()
-                this.alert.presentToast(error.message, 'bottom', 'danger')
-              })
-          })
-          .catch(async error => {
-            await this.loadingControl.dismiss()
-            this.alert.presentToast(error.message, 'bottom', 'danger')
-          })
-        } else {
-          await this.loadingControl.dismiss()
-        }
-      })
-      .catch(async error => {
-        await this.loadingControl.dismiss()
-        this.alert.presentToast(error.message, 'bottom', 'danger')
-      })
+    await this.storage.get('user_data').then(async data => {
+      if (!data.profile_updated) {
+        this.openModal('Bem vindo, você gostaria de preencher seu perfil agora?', true, data.user_type)
+      }
+    })
   }
 
   async openModal(text: string, profile_update: boolean, user_type: string) {

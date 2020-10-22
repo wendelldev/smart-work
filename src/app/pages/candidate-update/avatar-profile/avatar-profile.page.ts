@@ -156,7 +156,7 @@ export class AvatarProfilePage implements OnInit {
         avatarRef.getDownloadURL().subscribe(url => {
           this.authService.updateUserData(this.user.uid, this.userData.user_type, { avatar_url: url })
           this.userData.avatar_url = url
-          this.localStorage.set('user_data', JSON.stringify(this.userData))
+          this.localStorage.set('user_data', this.userData)
         })
         this.uploadFinalized = true
         await this.alert.presentToast('Upload de imagem finalizado.', 'bottom', 'success')

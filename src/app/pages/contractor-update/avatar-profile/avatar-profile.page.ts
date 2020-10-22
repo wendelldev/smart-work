@@ -47,27 +47,19 @@ export class AvatarProfilePage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    this.user = JSON.parse(await this.localStorage.get('user'))
-    this.userData = JSON.parse(await this.localStorage.get('user_data'))
-
-    this.authService.getUserData(this.user.uid, this.userData.user_type + 's').then(res => {
-      if (res.val().avatar_url) {
-        this.avatar = this.sanitizer.bypassSecurityTrustResourceUrl(res.val().avatar_url)
-
-        this.activatedRoute.queryParams.subscribe(params => {
-          if (params) {
-            this.update = true
-          } else {
-            this.router.navigate(['/contractor-update/contact'], { replaceUrl: true })
-            this.alert.presentToast('Você já possui foto de perfil, continue seu cadastro.')
-          }
-        })
+    this.user = await this.localStorage.get('user')
+    await this.localStorage.get('user_data').then(data => {
+      this.userData = data
+      if (data.avatar_url) {
+        this.avatar = this.sanitizer.bypassSecurityTrustResourceUrl(data.avatar_url)
+        this.router.navigate(['/contractor-update/contact'], { replaceUrl: true, state: { user_data: data } })
+        this.alert.presentToast('Este contratante já possui foto de perfil. For favor, finalize seu cadastro.', 'bottom', 'danger')
       }
     })
   }
 
   nextPage() {
-    this.router.navigate(['/contractor-update/contact'])
+    this.router.navigate(['/contractor-update/contact'], { state: { user_data: this.userData } })
   }
 
   async chooseSource(): Promise<void> {
@@ -167,7 +159,7 @@ export class AvatarProfilePage implements OnInit {
         avatarRef.getDownloadURL().subscribe(url => {
           this.authService.updateUserData(this.user.uid, this.userData.user_type, { avatar_url: url })
           this.userData.avatar_url = url
-          this.localStorage.set('user_data', JSON.stringify(this.userData))
+          this.localStorage.set('user_data', this.userData)
         })
         this.uploadFinalized = true
         await this.alert.presentToast('Upload de imagem finalizado.', 'bottom', 'success')

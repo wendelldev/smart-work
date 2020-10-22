@@ -32,15 +32,15 @@ export class LocationPage implements OnInit {
 
     this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
+        this.location.getStates().subscribe(
+          (data: any[]) => this.states = data
+        )
         this.userData = this.router.getCurrentNavigation().extras.state.user_data
         this.fetchCities(this.userData.state_id).subscribe((cities: any[]) => this.cities = cities)
         this.candidateForm.patchValue(this.userData)
+
       }
     })
-
-    this.location.getStates().subscribe(
-      (data: any[]) => this.states = data
-    )
   }
 
   ngOnInit() {

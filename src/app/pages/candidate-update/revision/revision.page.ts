@@ -72,7 +72,7 @@ export class RevisionPage implements OnInit {
     this.authService.updateUserData(this.userData.uid, this.userData.user_type, this.userData)
       .then(res => {
         this.loadingControl.dismiss()
-        this.router.navigate(['/tabs/candidate-profile'], {  })
+        this.router.navigate(['/tabs/candidate-profile'])
         this.localStorage.set('user_data', this.userData)
         this.alert.presentToast('Usuário atualizado com sucesso.')
       })

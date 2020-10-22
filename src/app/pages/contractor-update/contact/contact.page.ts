@@ -1,7 +1,7 @@
 import { Storage } from '@ionic/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-contact',
@@ -16,24 +16,34 @@ export class ContactPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private localStorage: Storage,
-    private router: Router
-  ) { }
-
-  ngOnInit() {
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.contractorForm = this.formBuilder.group({
       name: [null, [Validators.required, Validators.minLength(5)]],
       email: [null, [Validators.required, Validators.email]],
       comercial_phone: [null, [Validators.required, Validators.minLength(15)]],
       cnpj_cpf: [null, [Validators.required, Validators.minLength(14), Validators.maxLength(18)]]
     })
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.userData = this.router.getCurrentNavigation().extras.state.user_data
+        this.contractorForm.patchValue(this.userData)
+      }
+    })
+
   }
 
-  async ionViewWillEnter() {
-    await this.localStorage.get('user_data')
-      .then(data => {
-        this.userData = JSON.parse(data)
-        this.contractorForm.patchValue(this.userData)
-      })
+  ngOnInit() {
+  }
+
+  goToRevision() {
+    this.userData.name = this.contractorForm.get('name').value
+    this.userData.email = this.contractorForm.get('email').value
+    this.userData.comercial_phone = this.contractorForm.get('comercial_phone').value
+    this.userData.cnpj_cpf = this.contractorForm.get('cnpj_cpf').value
+
+    this.router.navigate(['/contractor-update/revision'], { state: { user_data: this.userData } })
   }
 
   nextPage() {
@@ -42,8 +52,7 @@ export class ContactPage implements OnInit {
     this.userData.comercial_phone = this.contractorForm.get('comercial_phone').value
     this.userData.cnpj_cpf = this.contractorForm.get('cnpj_cpf').value
 
-    this.localStorage.set('user_data', JSON.stringify(this.userData))
-    this.router.navigate(['/contractor-update/location'])
+    this.router.navigate(['/contractor-update/location'], { state: { user_data: this.userData } })
   }
 
 }

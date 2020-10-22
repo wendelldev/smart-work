@@ -33,32 +33,17 @@ export class ContractorProfilePage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    await this.loadingService.presentLoadingDefault()
-    await this.storage.get('user')
-      .then(async user => {
-        const userData = JSON.parse(user)
-        await this.storage.get('user_type')
-          .then(type => {
-            this.authService.getUserData(userData.uid, type + 's')
-              .then(async res => {
-                this.userData = res.val()
+    await this.storage.get('user_data').then(data => {
+      this.userData = data
 
-                this.location.getStateById(this.userData.state_id).subscribe(
-                  data => this.state = data[0]
-                )
-          
-                this.location.getCityById(this.userData.city_id).subscribe(
-                  data => this.city = data[0]
-                )
+      this.location.getStateById(this.userData.state_id).subscribe(
+        data => this.state = data[0]
+      )
 
-                await this.loadingControl.dismiss()
-              })
-              .catch(async error => {
-                await this.loadingControl.dismiss()
-                this.alert.presentToast(error.message, 'bottom', 'danger')
-              })
-          })
-      })
+      this.location.getCityById(this.userData.city_id).subscribe(
+        data => this.city = data[0]
+      )
+    })
   }
 
   formatDate(dateTime: string) {
@@ -69,7 +54,7 @@ export class ContractorProfilePage implements OnInit {
   }
 
   goToUpdateContractor() {
-    this.router.navigate(['/contractor-update/avatar-profile'], { queryParams: { update: 'true' } })
+    this.router.navigate(['/contractor-update/avatar-profile'])
   }
 
 }

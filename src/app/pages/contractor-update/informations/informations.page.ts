@@ -1,7 +1,7 @@
 import { Storage } from '@ionic/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-informations',
@@ -16,28 +16,27 @@ export class InformationsPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private localStorage: Storage,
-    private router: Router
-  ) { }
-
-  ngOnInit() {
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.contractorForm = this.formBuilder.group({
       description: [null, Validators.required],
     })
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.userData = this.router.getCurrentNavigation().extras.state.user_data
+        this.contractorForm.patchValue(this.userData)
+      }
+    })
   }
 
-  async ionViewWillEnter() {
-    await this.localStorage.get('user_data')
-      .then(data => {
-        this.userData = JSON.parse(data)
-        this.contractorForm.patchValue(this.userData)
-      })
+  ngOnInit() {
   }
 
   nextPage() {
     this.userData.description = this.contractorForm.get('description').value
 
-    this.localStorage.set('user_data', JSON.stringify(this.userData))
-    this.router.navigate(['/contractor-update/revision'])
+    this.router.navigate(['/contractor-update/revision'], { state: { user_data: this.userData } })
   }
 
 }
