@@ -106,7 +106,7 @@
     expand="block"
     (click)="saveData()"
   >
-    Salvar
+    {{ userData.profile_updated ? 'Atualizar perfil' : 'Salvar dados' }}
     <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
   </ion-button>
 </ion-content>

@@ -1,5 +1,5 @@
 import { Storage } from '@ionic/storage';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LocationService } from './../../../services/location.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -23,14 +23,19 @@ export class LocationPage implements OnInit {
     private formBuilder: FormBuilder,
     private location: LocationService,
     private router: Router,
-    private alert: ToastService,
-    private localStorage: Storage
-  ) { }
-
-  ngOnInit() {
+    private activatedRoute: ActivatedRoute
+  ) {
     this.candidateForm = this.formBuilder.group({
       state_id: [null, Validators.required],
       city_id: [null, Validators.required],
+    })
+
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.userData = this.router.getCurrentNavigation().extras.state.user_data
+        this.fetchCities(this.userData.state_id).subscribe((cities: any[]) => this.cities = cities)
+        this.candidateForm.patchValue(this.userData)
+      }
     })
 
     this.location.getStates().subscribe(
@@ -38,13 +43,14 @@ export class LocationPage implements OnInit {
     )
   }
 
-  async ionViewWillEnter() {
-    await this.localStorage.get('user_data')
-      .then(data => {
-        this.userData = JSON.parse(data)
-        this.fetchCities(this.userData.state_id).subscribe((cities: any[]) => this.cities = cities)
-        this.candidateForm.patchValue(this.userData)
-      })
+  ngOnInit() {
+    
+  }
+
+  ionViewDidEnter() {
+    if (this.userData) {
+      this.candidateForm.patchValue(this.userData)
+    }
   }
 
   // Listar cidades conforme estado selecionado
@@ -58,15 +64,17 @@ export class LocationPage implements OnInit {
     this.fetchCities(stateId).subscribe((cities: any[]) => this.cities = cities)
     this.candidateForm.get('city_id').setValue(null)
   }
-  
-  // Pegar objetos de cidade e estado conforme os Id's
-  nextPage() {
 
+  goToRevision() {
     this.userData.state_id = this.candidateForm.get('state_id').value
     this.userData.city_id = this.candidateForm.get('city_id').value
-
-    this.localStorage.set('user_data', JSON.stringify(this.userData))
-    this.router.navigate(['/candidate-update/scholarity'])
+    this.router.navigate(['/candidate-update/revision'], { state: { user_data: this.userData } })
+  }
+  
+  nextPage() {
+    this.userData.state_id = this.candidateForm.get('state_id').value
+    this.userData.city_id = this.candidateForm.get('city_id').value
+    this.router.navigate(['/candidate-update/scholarity'], { state: { user_data: this.userData } })
   }
 
 }

@@ -1,5 +1,5 @@
 import { ExperienceModalPage } from './../../experience-modal/experience-modal.page';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -15,25 +15,27 @@ export class ExperiencesPage implements OnInit {
   candidateForm: FormGroup
   userData: any
 
+  update: boolean = false
 
   constructor(
     private formBuilder: FormBuilder,
     private localStorage: Storage,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private modalControl: ModalController
-  ) { }
-
-  async ngOnInit() {
+  ) {
     this.candidateForm = this.formBuilder.group({
       experiences: [[]]
     })
-
-    await this.localStorage.get('user_data')
-      .then(data => {
-        this.userData = JSON.parse(data)
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.userData = this.router.getCurrentNavigation().extras.state.user_data
         this.candidateForm.patchValue(this.userData)
-        this.localStorage.set('experiences', JSON.stringify(this.userData.experiences))
-      })
+      }
+    })
+  }
+
+  ngOnInit() {
   }
 
   removeExperience(id: any) {
@@ -59,11 +61,14 @@ export class ExperiencesPage implements OnInit {
     modal.present()
   }
 
+  goToRevision() {
+    this.userData.experiences = this.candidateForm.get('experiences').value
+    this.router.navigate(['/candidate-update/revision'], { state: { user_data: this.userData } })
+  }
+
   nextPage() {
     this.userData.experiences = this.candidateForm.get('experiences').value
-
-    this.localStorage.set('user_data', JSON.stringify(this.userData))
-    this.router.navigate(['/candidate-update/presentation'])
+    this.router.navigate(['/candidate-update/presentation'], { state: { user_data: this.userData } })
   }
 
 }

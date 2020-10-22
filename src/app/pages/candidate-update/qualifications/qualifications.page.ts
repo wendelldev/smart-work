@@ -1,5 +1,4 @@
-import { Router } from '@angular/router';
-import { Storage } from '@ionic/storage';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -13,31 +12,36 @@ export class QualificationsPage implements OnInit {
   candidateForm: FormGroup
   userData: any
 
+  update: boolean = false
+
   constructor(
     private formBuilder: FormBuilder,
-    private localStorage: Storage,
-    private router: Router
-  ) { }
+    private router: Router,
+    private activatedRoute: ActivatedRoute
 
-  ngOnInit() {
+  ) {
     this.candidateForm = this.formBuilder.group({
       qualifications: [null, Validators.required],
     })
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.userData = this.router.getCurrentNavigation().extras.state.user_data
+        this.candidateForm.patchValue(this.userData)
+      }
+    })
   }
 
-  async ionViewWillEnter() {
-    await this.localStorage.get('user_data')
-      .then(data => {
-        this.userData = JSON.parse(data)
-        this.candidateForm.patchValue(this.userData)
-      })
+  ngOnInit() {
+  }
+
+  goToRevision() {
+    this.userData.qualifications = this.candidateForm.get('qualifications').value
+    this.router.navigate(['/candidate-update/revision'], { state: { user_data: this.userData } })
   }
 
   nextPage() {
     this.userData.qualifications = this.candidateForm.get('qualifications').value
-
-    this.localStorage.set('user_data', JSON.stringify(this.userData))
-    this.router.navigate(['/candidate-update/experiences'])
+    this.router.navigate(['/candidate-update/experiences'], { state: { user_data: this.userData } })
   }
 
 }

@@ -21,13 +21,24 @@
       </ion-item>
 
       <ion-button
-        [disabled]="candidateForm.get('mobile_phone').invalid"
+        [disabled]="candidateForm.invalid"
         class="sw-button"
         color="light"
         expand="block"
         (click)="nextPage()"
       >
         Próximo
+        <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+      </ion-button>
+
+      <ion-button
+        *ngIf="userData.profile_updated"
+        class="sw-button"
+        color="light"
+        expand="block"
+        (click)="goToRevision()"
+        >
+        Concluir
         <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
       </ion-button>
   </form>

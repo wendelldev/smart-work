@@ -26,8 +26,6 @@ export class AvatarProfilePage implements OnInit {
   user: any
   userData: any
 
-  update = false
-
   constructor(
     private file: File,
     private camera: Camera,
@@ -38,7 +36,6 @@ export class AvatarProfilePage implements OnInit {
     private alert: ToastService,
     private storage: AngularFireStorage,
     private authService: AuthenticationService,
-    private activatedRoute: ActivatedRoute,
     private router: Router,
     private localStorage: Storage
   ) { }
@@ -47,27 +44,19 @@ export class AvatarProfilePage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    this.user = JSON.parse(await this.localStorage.get('user'))
-    this.userData = JSON.parse(await this.localStorage.get('user_data'))
-
-    this.authService.getUserData(this.user.uid, this.userData.user_type + 's').then(res => {
-      if (res.val().avatar_url) {
-        this.avatar = this.sanitizer.bypassSecurityTrustResourceUrl(res.val().avatar_url)
-
-        this.activatedRoute.queryParams.subscribe(params => {
-          if (params) {
-            this.update = true
-          } else {
-            this.router.navigate(['/candidate-update/personal-info'], { replaceUrl: true })
-            this.alert.presentToast('Você já possui foto de perfil, continue seu cadastro.')
-          }
-        })
+    this.user = await this.localStorage.get('user')
+    await this.localStorage.get('user_data').then(data => {
+      this.userData = data
+      if (data.avatar_url) {
+        this.avatar = this.sanitizer.bypassSecurityTrustResourceUrl(this.userData.avatar_url)
+        this.router.navigate(['/candidate-update/personal-info'], { replaceUrl: true, state: { user_data: data } })
+        this.alert.presentToast('Você já possui foto de perfil. Por favor, finalize seu cadastro.', 'bottom', 'danger')
       }
     })
   }
 
   nextPage() {
-    this.router.navigate(['/candidate-update/personal-info'])
+    this.router.navigate(['/candidate-update/personal-info'], { state: { user_data: this.userData } })
   }
 
   async chooseSource(): Promise<void> {

@@ -12,19 +12,14 @@ export class TabsPage {
   user_type = null
 
   constructor(
-    private loadingService: LoadingService,
-    private loadingControl: LoadingController,
     private storage: Storage,
   ) {}
 
   async ionViewWillEnter() {
-    await this.loadingService.presentLoadingDefault()
-      await this.storage.get('user_type')
-        .then(async type => {
-          console.log(type)
-          this.user_type = type
-          await this.loadingControl.dismiss()
-        })
+    await this.storage.get('user_data')
+      .then(async data => {
+        this.user_type = data.user_type
+      })
   }
 
 }

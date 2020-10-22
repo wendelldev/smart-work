@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -21,51 +21,35 @@ export class CandidateProfilePage implements OnInit {
   city = null
 
   constructor(
-    private alert: ToastService,
     private modalControl: ModalController,
     private location: LocationService,
-    private authService: AuthenticationService,
-    private loadingService: LoadingService,
-    private loadingControl: LoadingController,
+    private loadingController: LoadingController,
     private storage: Storage,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
   }
 
   async ionViewWillEnter() {
-    await this.loadingService.presentLoadingDefault()
-    await this.storage.get('user')
-      .then(async user => {
-        const userData = JSON.parse(user)
-        await this.storage.get('user_type')
-          .then(type => {
-            this.authService.getUserData(userData.uid, type + 's')
-              .then(async res => {
-                this.userData = res.val()
+    await this.storage.get('user_data').then(data => {
+      this.userData = data
 
-                this.location.getStateById(this.userData.state_id).subscribe(
-                  data => this.state = data[0]
-                )
-          
-                this.location.getCityById(this.userData.city_id).subscribe(
-                  data => this.city = data[0]
-                )
+      this.location.getStateById(this.userData.state_id).subscribe(
+        data => this.state = data[0]
+      )
 
-                if (!this.userData.profile_updated) {
-                  this.openModal('Bem vindo, você gostaria de preencher seu perfil profissional agora?', true, this.userData.user_type)
-                }
+      this.location.getCityById(this.userData.city_id).subscribe(
+        data => this.city = data[0]
+      )
 
-                await this.loadingControl.dismiss()
-              })
-              .catch(async error => {
-                await this.loadingControl.dismiss()
-                this.alert.presentToast(error.message, 'bottom', 'danger')
-              })
-          })
-      })
+      if (!this.userData.profile_updated) {
+        this.openModal('Bem vindo, você gostaria de preencher seu perfil profissional agora?', true, this.userData.user_type)
+      }
+    })
   }
+
 
   formatDate(dateTime: string) {
     moment.locale('pt-br')
@@ -75,7 +59,7 @@ export class CandidateProfilePage implements OnInit {
   }
 
   goToUpdateCandidate() {
-    this.router.navigate(['/candidate-update/avatar-profile'], { queryParams: { update: 'true' } })
+    this.router.navigate(['/candidate-update/avatar-profile'])
   }
 
   async openModal(text: string, profile_updated: boolean, user_type: string) {

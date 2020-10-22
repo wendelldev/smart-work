@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar color="secondary">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="/candidate-profile"></ion-back-button>
     </ion-buttons>
     <ion-title>Atualização de perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="userData">
   <ion-avatar>
     <ion-icon *ngIf="!avatar" name="person-outline"></ion-icon>
     <img *ngIf="avatar" [src]="avatar">
@@ -46,11 +46,11 @@
     </ion-button>
 
     <ion-button
-      *ngIf="uploadFinalized || update"
+      *ngIf="uploadFinalized || userData.profile_updated"
       class="sw-button"
       color="light"
       expand="block"
-      (click)="goToRevision()"
+      [routerLink]="['/candidate-update/revision']"
     >
       Concluir
       <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>

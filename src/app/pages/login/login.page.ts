@@ -103,19 +103,19 @@ export class LoginPage implements AfterViewInit {
     
     this.authService.SignIn(email, password)
       .then(async response => {
-        this.storage.set('user', JSON.stringify(response.user))
+        this.storage.set('user', response.user)
         if (response.user.emailVerified) {
           this.authService.getUserData(response.user.uid, 'candidates').then(res => {
             if (res.val()) {
               this.storage.set('user_type', res.val().user_type)
-              this.storage.set('user_data', JSON.stringify(res.val()))
+              this.storage.set('user_data', res.val())
               this.loadingControl.dismiss()
               this.router.navigate(['/tabs/vacancies'])
             } else {
               this.authService.getUserData(response.user.uid, 'contractors').then(res => {
                 if (res.val()) {
                   this.storage.set('user_type', res.val().user_type)
-                  this.storage.set('user_data', JSON.stringify(res.val()))
+                  this.storage.set('user_data', res.val())
                   this.loadingControl.dismiss()
                   this.router.navigate(['/tabs/resumes'])
                 }

@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <form class="sw-form" [formGroup]="candidateForm" novalidate>
+  <form class="sw-form" [formGroup]="candidateForm" *ngIf="candidateForm" novalidate>
     <h3 class="wrapper">Dados pessoais.</h3>
       <ion-item lines="none">
         <ion-input formControlName="name" type="text" placeholder="Nome completo"></ion-input>
@@ -33,6 +33,17 @@
         (click)="nextPage()"
       >
         Próximo
+        <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
+      </ion-button>
+
+      <ion-button
+        *ngIf="userData.profile_updated"
+        class="sw-button"
+        color="light"
+        expand="block"
+        (click)="goToRevision()"
+        >
+        Concluir
         <ion-icon slot="end" src="/assets/logo.svg"></ion-icon>
       </ion-button>
   </form>

@@ -1,5 +1,4 @@
-import { Storage } from '@ionic/storage';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -13,31 +12,30 @@ export class PresentationPage implements OnInit {
   candidateForm: FormGroup
   userData: any
 
+  update: boolean = false
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private localStorage: Storage
-  ) { }
-
-  ngOnInit() {
+    private activatedRoute: ActivatedRoute,
+  ) {
     this.candidateForm = this.formBuilder.group({
       presentation_text: [null]
     })
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.userData = this.router.getCurrentNavigation().extras.state.user_data
+        this.candidateForm.patchValue(this.userData)
+      }
+    })
   }
 
-  async ionViewWillEnter() {
-    await this.localStorage.get('user_data')
-      .then(data => {
-        this.userData = JSON.parse(data)
-        this.candidateForm.patchValue(this.userData)
-      })
+  ngOnInit() { 
   }
 
   nextPage() {
     this.userData.presentation_text = this.candidateForm.get('presentation_text').value
-
-    this.localStorage.set('user_data', JSON.stringify(this.userData))
-    this.router.navigate(['/candidate-update/revision'])
+    this.router.navigate(['/candidate-update/revision'], { state: { user_data: this.userData } })
   }
 
 }
