@@ -42,6 +42,14 @@ const routes: Routes = [
     path: 'contractor-update',
     loadChildren: () => import('./pages/contractor-update/contractor-update.module').then( m => m.ContractorUpdatePageModule)
   },
+  {
+    path: 'registry-vacancy',
+    loadChildren: () => import('./pages/registry-vacancy/registry-vacancy.module').then( m => m.RegistryVacancyPageModule)
+  },
+  {
+    path: 'vacancies/:vacancyId',
+    loadChildren: () => import('./pages/vacancy-detail/vacancy-detail.module').then( m => m.VacancyDetailPageModule)
+  },
 
 ];
 @NgModule({

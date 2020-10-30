@@ -1,0 +1,226 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/vacancies"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Cadastrar Vaga</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form class="sw-form" [formGroup]="vacancyForm" *ngIf="vacancyForm" novalidate>
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Informações sobre a Vaga</ion-label>
+      </ion-item-divider>
+
+      <ion-item lines="none">
+        <ion-input formControlName="contractor_name" type="text" placeholder="Nome do Contratante" autocapitalize="on"></ion-input>
+        <ion-icon slot="start" name="business"></ion-icon>
+      </ion-item>
+
+      <div class="hide-informations">
+        <ion-text color="light">Ocultar informações do contratante?</ion-text>
+        <ion-toggle color="light" formControlName="hide_informations" (ionChange)="showInfo($event)"></ion-toggle>
+      </div>
+
+      <ion-item lines="none">
+        <ion-input formControlName="objective" type="text" placeholder="Nome do Cargo" autocapitalize="on"></ion-input>
+        <ion-icon slot="start" name="briefcase"></ion-icon>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon slot="start" name="cash"></ion-icon>
+        <ion-select formControlName="salary" 
+          placeholder="Faixa salarial"
+          okText="Ok"
+          cancelText="Cancelar"
+          interface="action-sheet">
+          <ion-select-option value="Menos que R$ 1045,00">Menos que R$ 1045,00</ion-select-option>
+          <ion-select-option value="R$ 1045,00 - R$ 2000,00">R$ 1045,00 - R$ 2000,00</ion-select-option>
+          <ion-select-option value="R$ 2000,00 - R$ 5000,00">R$ 2000,00 - R$ 5000,00</ion-select-option>
+          <ion-select-option value="R$ 5000,00 - R$ 8000,00">R$ 5000,00 - R$ 8000,00</ion-select-option>
+          <ion-select-option value="R$ 8000,00 - R$ 11000,00">R$ 8000,00 - R$ 11000,00</ion-select-option>
+          <ion-select-option value="R$ 11000,00 - R$ 14000,00">R$ 11000,00 - R$ 14000,00</ion-select-option>
+          <ion-select-option value="R$ 15000,00 ou mais">R$ 15000,00 ou mais</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon slot="start" name="location"></ion-icon>
+        <ion-select formControlName="modality" placeholder="Modalidade">
+          <ion-select-option value="Remoto">Remoto</ion-select-option>
+          <ion-select-option value="Presencial">Presencial</ion-select-option>
+          <ion-select-option value="Híbrido">Híbrido</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon slot="start" name="location"></ion-icon>
+        <ion-select formControlName="state_id"
+          placeholder="Estado"
+          (ionChange)="onStateChange($event)"
+          okText="Ok"
+          cancelText="Cancelar"
+        >
+          <ion-select-option
+            *ngFor="let state of states"
+            [value]="state.id"
+          >{{ state.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon slot="start" name="location"></ion-icon>
+        <ion-select
+          placeholder="Cidade"
+          formControlName="city_id"
+          okText="Ok"
+          cancelText="Cancelar"
+        >
+          <ion-select-option
+            *ngFor="let city of cities"
+            [value]="city.id"
+          >{{ city.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-input formControlName="neighborhood" type="text" placeholder="Bairro" autocapitalize="on"></ion-input>
+        <ion-icon slot="start" name="location"></ion-icon>
+      </ion-item>
+
+      <ion-item-divider>
+        <ion-label>Requisitos de Formação</ion-label>
+      </ion-item-divider>
+
+      <ion-item lines="none">
+        <ion-icon slot="start" name="school"></ion-icon>
+        <ion-select
+          placeholder="Nível de formação" 
+          formControlName="formation"
+          okText="Ok"
+          cancelText="Cancelar"
+          interface="action-sheet"
+        >
+          <ion-select-option value="Nenhuma">Nenhuma</ion-select-option>
+          <ion-select-option value="Fundamental Incompleto">Ensino Fundamental Incompleto</ion-select-option>
+          <ion-select-option value="Fundamental">Ensino Fundamental Completo</ion-select-option>
+          <ion-select-option value="Médio Incompleto">Ensino Médio Incompleto</ion-select-option>
+          <ion-select-option value="Médio Completo">Ensino Médio Completo</ion-select-option>
+          <ion-select-option value="Superior Incompleto">Ensino Superior Incompleto</ion-select-option>
+          <ion-select-option value="Superior Completo">Ensino Superior Completo</ion-select-option>
+          <ion-select-option value="Mestrado Incompleto">Mestrado Incompleto</ion-select-option>
+          <ion-select-option value="Mestrado Completo">Mestrado Completo</ion-select-option>
+          <ion-select-option value="Doutorado Incompleto">Doutorado Incompleto</ion-select-option>
+          <ion-select-option value="Doutorado Completo">Doutorado Completo</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="requirement" lines="none" *ngFor="let formation_area of formation_areas; let i = index">
+        <ion-label color="light">{{ formation_area }}</ion-label>
+        <ion-icon slot="end" name="close-circle" (click)="removeFormationArea(i)"></ion-icon>
+      </ion-item>
+
+      <ion-item class="add-requirement" lines="none">
+        <ion-icon slot="start" name="list-circle"></ion-icon>
+        <ion-input class="ion-text-wrap" formControlName="add_formation_area" type="text" placeholder="Adicionar formação/graduação" autocapitalize="on"></ion-input>
+        <ion-icon slot="end" name="add-circle" (click)="addFormationArea()"></ion-icon>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon slot="start" name="school"></ion-icon>
+        <ion-textarea formControlName="formation_details"
+          rows="4"
+          autoGrow="true"
+          autocapitalize="on"
+          placeholder="Mais requisitos de formação (opcional)"></ion-textarea>
+      </ion-item>
+
+      <ion-item-divider>
+        <ion-label>Requisitos comportamentais</ion-label>
+      </ion-item-divider>
+
+      <ion-item lines="none">
+        <ion-icon slot="start" name="people"></ion-icon>
+        <ion-textarea formControlName="behavior_requirements"
+          rows="4"
+          autoGrow="true"
+          autocapitalize="on"
+          placeholder="Requisitos comportamentais"
+        ></ion-textarea>
+      </ion-item>
+
+      <ion-item-divider>
+        <ion-label>Requisitos técnicos</ion-label>
+      </ion-item-divider>
+ 
+      <ion-item class="requirement" lines="none" *ngFor="let requirement of technical_requirements; let i = index">
+        <ion-label color="light">{{ requirement }}</ion-label>
+        <ion-icon slot="end" name="close-circle" (click)="removeRequirement(i)"></ion-icon>
+      </ion-item>
+
+      <ion-item class="add-requirement" lines="none">
+        <ion-icon slot="start" name="list-circle"></ion-icon>
+        <ion-input formControlName="add_requirement" type="text" placeholder="Adicionar requisito" autocapitalize="on"></ion-input>
+        <ion-icon slot="end" name="add-circle" (click)="addRequirement()"></ion-icon>
+      </ion-item>
+
+      <ion-item-divider>
+        <ion-label>Diferencial (opcional)</ion-label>
+      </ion-item-divider>
+
+      <ion-item class="requirement" lines="none" *ngFor="let differential of differentials; let i = index">
+        <ion-label color="light">{{ differential }}</ion-label>
+        <ion-icon slot="end" name="close-circle" (click)="removeDifferential(i)"></ion-icon>
+      </ion-item>
+
+      <ion-item class="add-requirement" lines="none">
+        <ion-icon slot="start" name="list-circle"></ion-icon>
+        <ion-input formControlName="add_differential" type="text" placeholder="Adicionar diferencial" autocapitalize="on"></ion-input>
+        <ion-icon slot="end" name="add-circle" (click)="addDifferential()"></ion-icon>
+      </ion-item>
+
+      <ion-item-divider>
+        <ion-label>Atribuições do cargo</ion-label>
+      </ion-item-divider>
+
+      <ion-item lines="none">
+        <ion-icon slot="start" name="list-circle"></ion-icon>
+        <ion-textarea formControlName="objective_assignments"
+          rows="4"
+          autoGrow="true"
+          autocapitalize="on"
+          placeholder="Atribuições"
+        ></ion-textarea>
+      </ion-item>
+
+      <ion-item-divider>
+        <ion-label>Contato (opcional)</ion-label>
+      </ion-item-divider>
+
+      <ion-item lines="none">
+        <ion-input formControlName="contractor_email" type="email" placeholder="Email"></ion-input>
+        <ion-icon slot="start" name="mail"></ion-icon>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-input formControlName="contractor_phone" type="email" placeholder="Telefone"></ion-input>
+        <ion-icon slot="start" name="call"></ion-icon>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-button
+      [disabled]="vacancyForm.invalid"
+      class="sw-button"
+      color="primary"
+      expand="block"
+      (click)="publishVacancy()"
+    >
+      Publicar Vaga
+      <ion-icon slot="end" name="add-outline"></ion-icon>
+    </ion-button>
+  </form>
+
+</ion-content>

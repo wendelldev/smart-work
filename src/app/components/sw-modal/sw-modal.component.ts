@@ -25,11 +25,15 @@ export class SwModalComponent implements OnInit {
   }
 
   goToUpdate() {
-    if (this.user_type === 'candidate') {
-      this.router.navigate(['/candidate-update/avatar-profile'])
-      this.modalControl.dismiss()
+    if (this.profile_updated) {
+      if (this.user_type === 'candidate') {
+        this.router.navigate(['/candidate-update/avatar-profile'])
+        this.modalControl.dismiss()
+      } else {
+        this.router.navigate(['/contractor-update/avatar-profile'])
+        this.modalControl.dismiss()
+      }
     } else {
-      this.router.navigate(['/contractor-update/avatar-profile'])
       this.modalControl.dismiss()
     }
   }

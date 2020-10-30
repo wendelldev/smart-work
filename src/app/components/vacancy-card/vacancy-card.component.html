@@ -1,0 +1,33 @@
+<ion-card>
+  <ion-card-content>
+    <div class="content">
+      <ion-item lines="none">
+        <ion-icon name="briefcase" slot="start"></ion-icon>
+        <ion-text color="dark">{{vacancy.objective}}</ion-text>
+      </ion-item>
+
+      <ion-item lines="none" *ngIf="!vacancy.hide_informations">
+        <ion-icon name="business" slot="start"></ion-icon>
+        <ion-text color="medium">{{ vacancy.contractor_name }}</ion-text>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon name="location" slot="start"></ion-icon>
+        <ion-text color="medium">{{ vacancy.modality }}</ion-text>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon name="cash" slot="start"></ion-icon>
+        <ion-text color="medium">{{ vacancy.salary }}</ion-text>
+      </ion-item>
+
+    </div>
+    <div class="icons">
+
+      <ion-icon name="star-outline"></ion-icon>
+
+      <ion-icon name="information-circle" (click)="goToVacancyDetail()"></ion-icon>
+      
+    </div>
+  </ion-card-content>
+</ion-card>

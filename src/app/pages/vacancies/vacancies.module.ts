@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { VacanciesPageRoutingModule } from './vacancies-routing.module';
 
 import { VacanciesPage } from './vacancies.page';
+import { VacancyCardComponent } from 'src/app/components/vacancy-card/vacancy-card.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { VacanciesPage } from './vacancies.page';
     IonicModule,
     VacanciesPageRoutingModule
   ],
-  declarations: [VacanciesPage]
+  declarations: [VacanciesPage, VacancyCardComponent]
 })
 export class VacanciesPageModule {}
