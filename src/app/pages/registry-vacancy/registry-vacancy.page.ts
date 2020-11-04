@@ -21,12 +21,16 @@ export class RegistryVacancyPage implements OnInit {
   vacancyData = null
   userData = null
 
+  hide_class = ''
+
   states: any[] = []
   cities: any[] = []
 
   technical_requirements: any[] = []
+  behavior_requirements: any[] = []
   differentials: any[] = []
   formation_areas: any[] = []
+  benefits: any[] = []
 
   constructor(
     private formBuilder: FormBuilder,
@@ -53,17 +57,19 @@ export class RegistryVacancyPage implements OnInit {
 
   async ionViewWillEnter() {
     this.vacancyForm = this.formBuilder.group({
-      contractor_name: [null, Validators.required],
+      contractor_name: [{value: null, disabled: true}, Validators.required],
       hide_informations: [false],
       objective: [null, [Validators.required]],
       salary: [null, [Validators.required]],
+      contract_type: [null, [Validators.required]],
       modality: [null, [Validators.required]],
       state_id: [null, [Validators.required]],
       city_id: [null, [Validators.required]],
       neighborhood: [null, [Validators.required]],
       formation: [null, [Validators.required]],
       formation_details: [null],
-      behavior_requirements: [null, [Validators.required]],
+      add_behavior: [null],
+      add_benefit: [null],
       add_requirement: [null],
       add_differential: [null],
       add_formation_area: [null],
@@ -102,10 +108,14 @@ export class RegistryVacancyPage implements OnInit {
 
   showInfo(event): void {
     if (event.detail.checked === true) {
+      this.hide_class = 'hide'
       this.presentModal(
         'Quando esta opção está ativa, algumas informações do contratante são ocultas \
-        ao candidato, assim como o acesso ao perfil do contratante através desta vaga.'
+        ao candidato, assim como o acesso ao perfil do contratante através desta vaga. \
+        As informações ocultas serão destacadas em amarelo.'
       )
+    } else {
+      this.hide_class = ''
     }
   }
 
@@ -137,6 +147,18 @@ export class RegistryVacancyPage implements OnInit {
     this.vacancyForm.get('add_formation_area').reset()
   }
 
+  addBehavior() {
+    const newBehavior = this.vacancyForm.get('add_behavior').value
+    this.behavior_requirements.push(newBehavior)
+    this.vacancyForm.get('add_behavior').reset()
+  }
+
+  addBenefit() {
+    const newBenefit = this.vacancyForm.get('add_benefit').value
+    this.benefits.push(newBenefit)
+    this.vacancyForm.get('add_benefit').reset()
+  }
+
   removeRequirement(id: number) {
     this.technical_requirements.splice(id, 1)
   }
@@ -149,6 +171,14 @@ export class RegistryVacancyPage implements OnInit {
     this.formation_areas.splice(id, 1)
   }
 
+  removeBehavior(id: number) {
+    this.behavior_requirements.splice(id, 1)
+  }
+
+  removeBenefit(id: number) {
+    this.benefits.splice(id, 1)
+  }
+
   async publishVacancy() {
     await this.loadingService.presentLoadingDefault()
     if (this.technical_requirements.length === 0) {
@@ -157,16 +187,21 @@ export class RegistryVacancyPage implements OnInit {
     } else {
       const vacancyObj = this.vacancyForm.value
 
+      vacancyObj.contractor_name = this.vacancyForm.get('contractor_name').value
       vacancyObj.contractor_uid = this.userData.uid
       vacancyObj.technical_requirements = this.technical_requirements
       vacancyObj.differentials = this.differentials
       vacancyObj.formation_areas = this.formation_areas
+      vacancyObj.behavior_requirements = this.behavior_requirements
+      vacancyObj.benefits = this.benefits
 
       delete vacancyObj.add_requirement
       delete vacancyObj.add_differential
       delete vacancyObj.add_formation_area
+      delete vacancyObj.add_benefit
+      delete vacancyObj.add_behavior
 
-      this.vacanciesService.registerVacancy(this.userData.uid, vacancyObj)
+      this.vacanciesService.registerVacancy(vacancyObj)
 
       await this.loadingControl.dismiss()
       this.router.navigate(['/tabs/vacancies'])

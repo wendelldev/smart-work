@@ -2,14 +2,8 @@ ion-card {
   border-radius: 8px;
 }
 
-ion-card-content {
-  display: grid;
-  grid-template-columns: 9fr 1fr;
-}
-
 .content {
   ion-item {
-    --padding-start: 12px;
 
     ion-text {
       font-weight: bold;
@@ -25,15 +19,9 @@ ion-card-content {
 }
 
 .icons {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-
   ion-icon {
     color: var(--ion-color-dark);
     font-size: 35px;
-  }
-
-  ion-button {
-    --padding-start: 0px;
+    margin-left: 10px;
   }
 }

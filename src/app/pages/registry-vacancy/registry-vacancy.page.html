@@ -12,10 +12,10 @@
   <form class="sw-form" [formGroup]="vacancyForm" *ngIf="vacancyForm" novalidate>
     <ion-item-group>
       <ion-item-divider>
-        <ion-label>Informações sobre a Vaga</ion-label>
+        <ion-text>Informações sobre a Vaga</ion-text>
       </ion-item-divider>
 
-      <ion-item lines="none">
+      <ion-item lines="none" [class]="hide_class">
         <ion-input formControlName="contractor_name" type="text" placeholder="Nome do Contratante" autocapitalize="on"></ion-input>
         <ion-icon slot="start" name="business"></ion-icon>
       </ion-item>
@@ -44,6 +44,24 @@
           <ion-select-option value="R$ 8000,00 - R$ 11000,00">R$ 8000,00 - R$ 11000,00</ion-select-option>
           <ion-select-option value="R$ 11000,00 - R$ 14000,00">R$ 11000,00 - R$ 14000,00</ion-select-option>
           <ion-select-option value="R$ 15000,00 ou mais">R$ 15000,00 ou mais</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon slot="start"name="document-text"></ion-icon>
+        <ion-select formControlName="contract_type"
+          placeholder="Tipo de contratação"
+          okText="Ok"
+          cancelText="Cancelar"
+          interface="action-sheet">
+          <ion-select-option value="Por tempo determinado">Por tempo determinado</ion-select-option>
+          <ion-select-option value="Por tempo indeterminado">Por tempo indeterminado</ion-select-option>
+          <ion-select-option value="Contrato de trabalho temporário">Contrato de trabalho temporário</ion-select-option>
+          <ion-select-option value="Contrato de trabalho eventual">Contrato de trabalho eventual(sem vínculos)</ion-select-option>
+          <ion-select-option value="Contrato intermitente">Contrato intermitente</ion-select-option>
+          <ion-select-option value="Jovem aprendiz">Jovem aprendiz</ion-select-option>
+          <ion-select-option value="Estágio">Estágio</ion-select-option>
+          <ion-select-option value="Pessoa Jurídica">Pessoa Jurídica</ion-select-option>
         </ion-select>
       </ion-item>
 
@@ -92,7 +110,7 @@
       </ion-item>
 
       <ion-item-divider>
-        <ion-label>Requisitos de Formação</ion-label>
+        <ion-text>Requisitos de Formação</ion-text>
       </ion-item-divider>
 
       <ion-item lines="none">
@@ -119,7 +137,7 @@
       </ion-item>
 
       <ion-item class="requirement" lines="none" *ngFor="let formation_area of formation_areas; let i = index">
-        <ion-label color="light">{{ formation_area }}</ion-label>
+        <ion-text color="light">{{ formation_area }}</ion-text>
         <ion-icon slot="end" name="close-circle" (click)="removeFormationArea(i)"></ion-icon>
       </ion-item>
 
@@ -139,25 +157,26 @@
       </ion-item>
 
       <ion-item-divider>
-        <ion-label>Requisitos comportamentais</ion-label>
+        <ion-text>Requisitos comportamentais (opcional)</ion-text>
       </ion-item-divider>
 
-      <ion-item lines="none">
-        <ion-icon slot="start" name="people"></ion-icon>
-        <ion-textarea formControlName="behavior_requirements"
-          rows="4"
-          autoGrow="true"
-          autocapitalize="on"
-          placeholder="Requisitos comportamentais"
-        ></ion-textarea>
+      <ion-item class="requirement" lines="none" *ngFor="let behavior of behavior_requirements; let i = index">
+        <ion-text color="light">{{ behavior }}</ion-text>
+        <ion-icon slot="end" name="close-circle" (click)="removeBehavior(i)"></ion-icon>
+      </ion-item>
+
+      <ion-item class="add-requirement" lines="none">
+        <ion-icon slot="start" name="list-circle"></ion-icon>
+        <ion-input formControlName="add_behavior" type="text" placeholder="Adicionar requisito" autocapitalize="on"></ion-input>
+        <ion-icon slot="end" name="add-circle" (click)="addBehavior()"></ion-icon>
       </ion-item>
 
       <ion-item-divider>
-        <ion-label>Requisitos técnicos</ion-label>
+        <ion-text>Requisitos técnicos/Requisitos de experiência</ion-text>
       </ion-item-divider>
  
       <ion-item class="requirement" lines="none" *ngFor="let requirement of technical_requirements; let i = index">
-        <ion-label color="light">{{ requirement }}</ion-label>
+        <ion-text color="light">{{ requirement }}</ion-text>
         <ion-icon slot="end" name="close-circle" (click)="removeRequirement(i)"></ion-icon>
       </ion-item>
 
@@ -168,11 +187,11 @@
       </ion-item>
 
       <ion-item-divider>
-        <ion-label>Diferencial (opcional)</ion-label>
+        <ion-text>Diferencial (opcional)</ion-text>
       </ion-item-divider>
 
       <ion-item class="requirement" lines="none" *ngFor="let differential of differentials; let i = index">
-        <ion-label color="light">{{ differential }}</ion-label>
+        <ion-text color="light">{{ differential }}</ion-text>
         <ion-icon slot="end" name="close-circle" (click)="removeDifferential(i)"></ion-icon>
       </ion-item>
 
@@ -183,7 +202,22 @@
       </ion-item>
 
       <ion-item-divider>
-        <ion-label>Atribuições do cargo</ion-label>
+        <ion-text>Benefícios da vaga (opcional)</ion-text>
+      </ion-item-divider>
+
+      <ion-item class="requirement" lines="none" *ngFor="let benefit of benefits; let i = index">
+        <ion-text color="light">{{ benefit }}</ion-text>
+        <ion-icon slot="end" name="close-circle" (click)="removeBenefit(i)"></ion-icon>
+      </ion-item>
+
+      <ion-item class="add-requirement" lines="none">
+        <ion-icon slot="start" name="list-circle"></ion-icon>
+        <ion-input formControlName="add_benefit" type="text" placeholder="Adicionar benefício" autocapitalize="on"></ion-input>
+        <ion-icon slot="end" name="add-circle" (click)="addBenefit()"></ion-icon>
+      </ion-item>
+
+      <ion-item-divider>
+        <ion-text>Atribuições do cargo</ion-text>
       </ion-item-divider>
 
       <ion-item lines="none">
@@ -197,7 +231,7 @@
       </ion-item>
 
       <ion-item-divider>
-        <ion-label>Contato (opcional)</ion-label>
+        <ion-text>Contato (opcional)</ion-text>
       </ion-item-divider>
 
       <ion-item lines="none">

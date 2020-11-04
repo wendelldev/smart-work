@@ -10,6 +10,10 @@ ion-content {
     }
   }
 
+  ion-item.hide {
+    --background: var(--ion-color-warning);
+  }
+
   ion-item.add-requirement {
     --inner-padding-end: 0px;
 
@@ -37,9 +41,11 @@ ion-content {
     border-radius: 8px;
     margin-bottom: 10px;
 
-    ion-label {
+    ion-text {
       color: var(--ion-color-light);
       font-weight: bold;
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
   }
 }

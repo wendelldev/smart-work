@@ -25,7 +25,7 @@ export class VacanciesService {
     return id
   }
 
-  registerVacancy(userId: string, vacancyData: any) {
+  registerVacancy(vacancyData: any) {
 
     vacancyData.id = this.getRandomId()
 
@@ -34,8 +34,6 @@ export class VacanciesService {
   }
 
   getAllVacancies() {
-    // return this.database.database.ref('vacancies')
-    //   .once('value')
     return this.database.list('vacancies').query.once('value')
   }
 
@@ -55,7 +53,21 @@ export class VacanciesService {
         .once('value')
   }
 
+  getContractorVacancies(contractorId: string) {
+    return this.database.database.ref('vacancies')
+      .orderByChild('contractor_uid').equalTo(contractorId).once('value')
+  }
+
   addVacanciesToStorage(vacancies: any) {
     this.storage.set('vacancies', vacancies)
+  }
+
+  updateVacancy(vacancyId: string, vacancyData: any) {
+    return this.database.list('vacancies/').update(vacancyId, vacancyData)
+  }
+
+  subscribeToVacancy(vacancyId: string, candidateData: any) {
+    return this.database.database.ref(`vacancies/${vacancyId}/subscriptions`)
+      .push(candidateData)
   }
 }

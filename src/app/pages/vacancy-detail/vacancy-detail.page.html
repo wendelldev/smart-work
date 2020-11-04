@@ -3,161 +3,148 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/vacancies"></ion-back-button>
     </ion-buttons>
+
+    <ion-buttons slot="end" *ngIf="userData?.uid === vacancyData?.contractor_uid">
+      <ion-button icon-only (click)="goToSubscriptions()">
+        <ion-icon name="document-text"></ion-icon>
+        <ion-badge *ngIf="subscriptionsKeys" color="danger">{{ subscriptionsKeys.length }}</ion-badge>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Detalhes da vaga</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="vacancyData">
-  
-  <ion-item-group>
-
+  <ion-card>
     <ion-item-divider color="secondary">
-      <ion-label>Contrante</ion-label>
+      <ion-text>Informações sobre a vaga</ion-text>
     </ion-item-divider>
-    <ion-item lines="none">
-      <ion-icon name="business" slot="start"></ion-icon>
-      <ion-text>{{ vacancyData.hide_informations ? 'Não informado' : vacancyData.contractor_name }}</ion-text>
-    </ion-item>
+    <ion-card-header>
+      <ion-card-subtitle>Contratante</ion-card-subtitle>
+      <ion-card-title>{{ vacancyData.hide_informations ? 'Ocultado pelo contratante' :  vacancyData.contractor_name }}</ion-card-title>
+    </ion-card-header>
 
-    <ion-item-divider color="secondary">
-      <ion-label>Cargo</ion-label>
-    </ion-item-divider>
-    <ion-item lines="none">
-      <ion-icon name="briefcase" slot="start"></ion-icon>
-      <ion-text>{{ vacancyData.objective }}</ion-text>
-    </ion-item>
+    <ion-card-header>
+      <ion-card-subtitle>Cargo</ion-card-subtitle>
+      <ion-card-title>{{ vacancyData.objective }}</ion-card-title>
+    </ion-card-header>
 
-    <ion-item-divider color="secondary">
-      <ion-label>Faixa salarial</ion-label>
-    </ion-item-divider>
-    <ion-item lines="none">
-      <ion-icon name="cash" slot="start"></ion-icon>
-      <ion-text>{{ vacancyData.salary }}</ion-text>
-    </ion-item>
+    <ion-card-header>
+      <ion-card-subtitle>Faixa salarial</ion-card-subtitle>
+      <ion-card-title>{{ vacancyData.salary }}</ion-card-title>
+    </ion-card-header>
 
-    <ion-item-divider color="secondary">
-      <ion-label>Modalidade</ion-label>
-    </ion-item-divider>
-    <ion-item lines="none">
-      <ion-icon name="location" slot="start"></ion-icon>
-      <ion-text>{{ vacancyData.modality }}</ion-text>
-    </ion-item>
+    <ion-card-header>
+      <ion-card-subtitle>Tipo de contratação</ion-card-subtitle>
+      <ion-card-title>{{ vacancyData.contract_type }}</ion-card-title>
+    </ion-card-header>
 
-    <ion-item-divider color="secondary">
-      <ion-label>Estado</ion-label>
-    </ion-item-divider>
-    <ion-item lines="none">
-      <ion-icon name="location" slot="start"></ion-icon>
-      <ion-text>{{ state?.name || 'Não informado' }}</ion-text>
-    </ion-item>
+    <ion-card-header>
+      <ion-card-subtitle>Modalidade</ion-card-subtitle>
+      <ion-card-title>{{ vacancyData.modality }}</ion-card-title>
+    </ion-card-header>
 
-    <ion-item-divider color="secondary">
-      <ion-label>Cidade</ion-label>
-    </ion-item-divider>
-    <ion-item lines="none">
-      <ion-icon name="location" slot="start"></ion-icon>
-      <ion-text>{{ city?.name || 'Não informado' }}</ion-text>
-    </ion-item>
+    <ion-card-header>
+      <ion-card-subtitle>Localização</ion-card-subtitle>
+      <ion-card-title>{{ state?.name  || 'Carregando' }}, {{ city?.name || 'Carregando' }}, {{ vacancyData.neighborhood }}</ion-card-title>
+    </ion-card-header>
 
-    <ion-item-divider color="secondary">
-      <ion-label>Bairro</ion-label>
-    </ion-item-divider>
-    <ion-item lines="none">
-      <ion-icon name="location" slot="start"></ion-icon>
-      <ion-text>{{ vacancyData.neighborhood }}</ion-text>
-    </ion-item>
+    <ion-card-header>
+      <ion-card-subtitle>Benefícios da vaga</ion-card-subtitle>
+      <ion-chip *ngFor="let benefit of vacancyData.benefits">
+        <ion-text>{{ benefit }}</ion-text>
+      </ion-chip>
+      <ion-chip *ngIf="!vacancyData.benefits">
+        <ion-text>Nenhum</ion-text>
+      </ion-chip>
+    </ion-card-header>
 
-    <ion-item-divider color="secondary">
-      <ion-label>(Requisito) Nível de Formação</ion-label>
-    </ion-item-divider>
-    <ion-item lines="none">
-      <ion-icon name="school" slot="start"></ion-icon>
-      <ion-text>{{ vacancyData.formation }}</ion-text>
-    </ion-item>
-
-    <ion-item-divider color="secondary">
-      <ion-label>(Requisito) Áreas de Formação</ion-label>
-    </ion-item-divider>
-    <ion-item lines="none" *ngFor="let formation_area of vacancyData.formation_areas">
-      <ion-icon name="list-circle" slot="start"></ion-icon>
-      <ion-text>{{ formation_area }}</ion-text>
-    </ion-item>
-    <ion-item lines="none" *ngIf="!vacancyData.formation_areas">
-      <ion-icon name="list-circle" slot="start"></ion-icon>
-      <ion-text>Nenhum</ion-text>
-    </ion-item>
-
-    <ion-item-divider color="secondary">
-      <ion-label>(Requisito) Outros requisitos de formação</ion-label>
-    </ion-item-divider>
-    <ion-item lines="none">
-      <ion-icon name="school" slot="start"></ion-icon>
-      <ion-text>{{ vacancyData.formation_details || 'Nenhum' }}</ion-text>
-    </ion-item>
-
-    <ion-item-divider color="secondary">
-      <ion-label>(Requisito) Requisitos comportamentais</ion-label>
-    </ion-item-divider>
-    <ion-item lines="none">
-      <ion-icon name="school" slot="start"></ion-icon>
-      <ion-text>{{ vacancyData.behavior_requirements || 'Nenhum' }}</ion-text>
-    </ion-item>
-
-    <ion-item-divider color="secondary">
-      <ion-label>(Requisito) Requisitos técnicos</ion-label>
-    </ion-item-divider>
-    <ion-chip *ngFor="let technical_requirement of vacancyData.technical_requirements">
-      <ion-icon name="list-circle"></ion-icon>
-      <ion-text>{{ technical_requirement }}</ion-text>
-    </ion-chip>
-    <ion-item lines="none" *ngIf="!vacancyData.technical_requirements">
-      <ion-icon name="list-circle" slot="start"></ion-icon>
-      <ion-text>Nenhum</ion-text>
-    </ion-item>
-
-    <ion-item-divider color="secondary">
-      <ion-label>(Requisito) Diferencial</ion-label>
-    </ion-item-divider>
-    <ion-chip *ngFor="let differential of vacancyData.differentials">
-      <ion-icon name="list-circle"></ion-icon>
-      <ion-text>{{ differential }}</ion-text>
-    </ion-chip>
-    <ion-item lines="none" *ngIf="!vacancyData.differentials">
-      <ion-icon name="list-circle" slot="start"></ion-icon>
-      <ion-text>Nenhum</ion-text>
-    </ion-item>
-
-    <ion-item-divider color="secondary">
-      <ion-label>Atribuições do Cargo</ion-label>
-    </ion-item-divider>
-    <ion-item lines="none">
-      <ion-icon name="school" slot="start"></ion-icon>
+    <ion-card-header>
+      <ion-card-subtitle>Atribuições do cargo</ion-card-subtitle>
       <ion-text>{{ vacancyData.objective_assignments }}</ion-text>
-    </ion-item>
+    </ion-card-header>
+  </ion-card>
 
-    <ion-item-divider color="secondary" *ngIf="vacancyData.contractor_email">
-      <ion-label>Email do contratante</ion-label>
+  <ion-card>
+    <ion-item-divider color="secondary">
+      <ion-text>Requisitos</ion-text>
     </ion-item-divider>
-    <ion-item lines="none" *ngIf="vacancyData.contractor_email">
-      <ion-icon name="mail" slot="start"></ion-icon>
-      <ion-text>{{ vacancyData.contractor_email }}</ion-text>
-    </ion-item>
+    <ion-card-header>
+      <ion-card-subtitle>Nível de Formação</ion-card-subtitle>
+      <ion-card-title>{{ vacancyData.formation }}</ion-card-title>
+    </ion-card-header>
 
-    <ion-item-divider color="secondary" *ngIf="vacancyData.contractor_email">
-      <ion-label>Telefone do contratante</ion-label>
+    <ion-card-header>
+      <ion-card-subtitle>Áreas de Formação</ion-card-subtitle>
+      <ion-chip *ngFor="let formation_area of vacancyData.formation_areas">
+        <ion-icon name="list-circle"></ion-icon>
+        <ion-text>{{ formation_area }}</ion-text>
+      </ion-chip>
+      <ion-chip *ngIf="!vacancyData.formation_areas">
+        <ion-text>Nenhum</ion-text>
+      </ion-chip>
+    </ion-card-header>
+
+    <ion-card-header>
+      <ion-card-subtitle>Outros requisitos de formação</ion-card-subtitle>
+      <ion-card-title>{{ vacancyData.formation_details || 'Nenhum' }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-header>
+      <ion-card-subtitle>Requisitos comportamentais</ion-card-subtitle>
+      <ion-chip *ngFor="let behavior of vacancyData.behavior_requirements">
+        <ion-icon name="list-circle"></ion-icon>
+        <ion-text>{{ behavior }}</ion-text>
+      </ion-chip>
+      <ion-chip *ngIf="!vacancyData.behavior_requirements">
+        <ion-text>Nenhum</ion-text>
+      </ion-chip>
+    </ion-card-header>
+
+    <ion-card-header>
+      <ion-card-subtitle>Requisitos técnicos</ion-card-subtitle>
+      <ion-chip *ngFor="let technical of vacancyData.technical_requirements">
+        <ion-icon name="list-circle"></ion-icon>
+        <ion-text>{{ technical }}</ion-text>
+      </ion-chip>
+      <ion-chip *ngIf="!vacancyData.technical_requirements">
+        <ion-text>Nenhum</ion-text>
+      </ion-chip>
+    </ion-card-header>
+
+    <ion-card-header>
+      <ion-card-subtitle>Diferencial</ion-card-subtitle>
+      <ion-chip *ngFor="let differential of vacancyData.differentials">
+        <ion-icon name="list-circle"></ion-icon>
+        <ion-text>{{ differential }}</ion-text>
+      </ion-chip>
+      <ion-chip *ngIf="!vacancyData.differentials">
+        <ion-text>Nenhum</ion-text>
+      </ion-chip>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card>
+    <ion-item-divider color="secondary">
+      <ion-text>Contato</ion-text>
     </ion-item-divider>
-    <ion-item lines="none" *ngIf="vacancyData.contractor_phone">
-      <ion-icon name="call" slot="start"></ion-icon>
-      <ion-text>{{ vacancyData.contractor_phone }}</ion-text>
-    </ion-item>
+    <ion-card-header>
+      <ion-card-subtitle>Email do contratante</ion-card-subtitle>
+      <ion-card-title>{{ vacancyData.contractor_email ||  'Não informado' }}</ion-card-title>
+    </ion-card-header>
 
-  </ion-item-group>
+    <ion-card-header>
+      <ion-card-subtitle>Telefone do contratante</ion-card-subtitle>
+      <ion-card-title>{{ vacancyData.contractor_phone || 'Não informado' }}</ion-card-title>
+    </ion-card-header>
+  </ion-card>
 
   <ion-button
+      [disabled]="userData?.uid === vacancyData?.contractor_uid"
       class="sw-button"
       color="secondary"
       expand="block"
-      (click)="sendResume()"
+      (click)="subscribeToVacancy()"
     >
       Me candidatar
       <ion-icon slot="end" name="send"></ion-icon>

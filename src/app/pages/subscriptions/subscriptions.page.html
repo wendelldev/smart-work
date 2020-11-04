@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Inscrições</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <subscription-card *ngFor="let key of subscriptionsKeys"
+    [subscription]="subscriptions[key]"
+  ></subscription-card>
+
+  <div class="spinner">
+    <ion-spinner *ngIf="isLoading" name="lines"></ion-spinner>
+  </div>
+</ion-content>

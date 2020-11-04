@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { VacancyDetailPageRoutingModule } from './vacancy-detail-routing.module';
 
 import { VacancyDetailPage } from './vacancy-detail.page';
+import { SwModalComponent } from 'src/app/components/sw-modal/sw-modal.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { VacancyDetailPage } from './vacancy-detail.page';
     IonicModule,
     VacancyDetailPageRoutingModule
   ],
-  declarations: [VacancyDetailPage]
+  declarations: [VacancyDetailPage, SwModalComponent]
 })
 export class VacancyDetailPageModule {}

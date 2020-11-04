@@ -8,6 +8,7 @@ import { VacanciesPageRoutingModule } from './vacancies-routing.module';
 
 import { VacanciesPage } from './vacancies.page';
 import { VacancyCardComponent } from 'src/app/components/vacancy-card/vacancy-card.component';
+import { FilterPopoverComponent } from 'src/app/components/filter-popover/filter-popover.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { VacancyCardComponent } from 'src/app/components/vacancy-card/vacancy-ca
     IonicModule,
     VacanciesPageRoutingModule
   ],
-  declarations: [VacanciesPage, VacancyCardComponent]
+  declarations: [VacanciesPage, VacancyCardComponent, FilterPopoverComponent]
 })
 export class VacanciesPageModule {}

@@ -1,3 +1,19 @@
+ion-card {
+  border-radius: 8px;
+
+  ion-card-title {
+    font-size: 16px;
+    font-weight: normal;
+  }
+
+  ion-card-header {
+    ion-text {
+      font-size: 14px;
+      color: var(--ion-color-dark);
+    }
+  }
+}
+
 ion-content {
   --padding-start: 15px;
   --padding-end: 15px;
@@ -5,8 +21,14 @@ ion-content {
 }
 
 ion-item-divider {
-  margin-top: 15px;
   border-radius: 8px 8px 0px 0px;
+
+  ion-text {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }
 
 ion-item {

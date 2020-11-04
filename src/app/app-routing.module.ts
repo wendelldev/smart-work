@@ -50,6 +50,10 @@ const routes: Routes = [
     path: 'vacancies/:vacancyId',
     loadChildren: () => import('./pages/vacancy-detail/vacancy-detail.module').then( m => m.VacancyDetailPageModule)
   },
+  {
+    path: 'subscriptions',
+    loadChildren: () => import('./pages/subscriptions/subscriptions.module').then( m => m.SubscriptionsPageModule)
+  },
 
 ];
 @NgModule({

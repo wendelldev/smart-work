@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { FilterPopoverComponent } from 'src/app/components/filter-popover/filter-popover.component';
 import { SwModalComponent } from 'src/app/components/sw-modal/sw-modal.component';
 import { VacanciesService } from 'src/app/services/vacancies.service';
 
@@ -16,10 +17,13 @@ export class VacanciesPage implements OnInit {
   keys = null
   isLoading: boolean = false
 
+  filter_value: string = 'all'
+
   constructor(
     private storage: Storage,
     private modalControl: ModalController,
-    private vacanciesService: VacanciesService
+    private vacanciesService: VacanciesService,
+    private popoverController: PopoverController
   ) {}
 
   ngOnInit() {}
@@ -33,33 +37,76 @@ export class VacanciesPage implements OnInit {
       }
     })
     
-    this.vacanciesService.getAllVacancies()
+    this.filterVacancies(this.filter_value)
+  }
+
+  refreshVacanciesList(event: any) {
+      this.filterVacancies(this.filter_value, event)
+  }
+
+  filterVacancies(filter: string, ev: any = null) {
+    if (filter === 'all') {
+      this.vacancies = null
+      this.keys = null
+      this.isLoading = true
+      this.vacanciesService.getAllVacancies()
       .then(data => {
         this.vacanciesService.addVacanciesToStorage(data.val())
         this.vacancies = data.val()
         this.isLoading = false
         this.keys = Object.keys(this.vacancies)
+        if (ev) {
+          ev.target.complete()
+        }
       })
       .catch(error => {
         this.isLoading = false
         console.log(error)
+        if (ev) {
+          ev.target.complete()
+        }
       })
+    } else if (filter === 'my_vacancies') {
+      this.isLoading = true
+      this.vacancies = null
+      this.keys = null
+      this.vacanciesService.getContractorVacancies(this.userData.uid)
+        .then(data => {
+          this.vacancies = data.val()
+          this.isLoading = false
+          this.keys = Object.keys(this.vacancies)
+          if (ev) {
+            ev.target.complete()
+          }
+        })
+        .catch(error => {
+          this.isLoading = false
+          console.log(error)
+          if (ev) {
+            ev.target.complete()
+          }
+        })
+    }
   }
 
-  refreshVacanciesList(event) {
-    this.vacanciesService.getAllVacancies()
-    .then(data => {
-      this.vacanciesService.addVacanciesToStorage(data.val())
-      this.vacancies = data.val()
-      this.isLoading = false
-      this.keys = Object.keys(this.vacancies)
-      event.target.complete()
+  async presentPopover(event: any) {
+    const popover = await this.popoverController.create({
+      component: FilterPopoverComponent,
+      cssClass: 'filter_popover',
+      event: event,
+      translucent: true,
+      componentProps: {
+        "user_type": this.userData.user_type,
+        "filter_value":  this.filter_value
+      }
     })
-    .catch(error => {
-      this.isLoading = false
-      console.log(error)
-      event.target.complete()
+
+    popover.onDidDismiss().then((data) => {
+      this.filter_value = data.data
+      this.filterVacancies(this.filter_value)
     })
+
+    await popover.present()
   }
 
   async openModal(text: string, profile_update: boolean, user_type: string) {

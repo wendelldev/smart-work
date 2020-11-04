@@ -27,6 +27,14 @@
       <ion-icon name="star-outline"></ion-icon>
 
       <ion-icon name="information-circle" (click)="goToVacancyDetail()"></ion-icon>
+
+      <ion-button
+        (click)="goToSubscriptions()"
+        button-type="icon-only" 
+        *ngIf="userData.uid  === vacancy.contractor_uid">
+        <ion-icon name="document-text"></ion-icon>
+        <ion-badge *ngIf="subscriptionsKeys" color="danger">{{ subscriptionsKeys.length }}</ion-badge>
+      </ion-button>
       
     </div>
   </ion-card-content>
