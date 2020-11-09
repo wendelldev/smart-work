@@ -1,0 +1,9 @@
+<ion-card>
+  <ion-item-divider color="secondary" (click)="toggleAccordion()">
+    <ion-text>{{title}}</ion-text>
+    <ion-icon slot="end" [name]="icon"></ion-icon>
+  </ion-item-divider>
+  <div #wrapper>
+    <ng-content></ng-content>
+  </div>
+</ion-card>

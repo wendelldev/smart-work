@@ -15,38 +15,35 @@
 </ion-header>
 
 <ion-content *ngIf="vacancyData">
-  <ion-card>
-    <ion-item-divider color="secondary">
-      <ion-text>Informações sobre a vaga</ion-text>
-    </ion-item-divider>
+  <accordion title="Informações sobre a vaga">
     <ion-card-header>
       <ion-card-subtitle>Contratante</ion-card-subtitle>
-      <ion-card-title>{{ vacancyData.hide_informations ? 'Ocultado pelo contratante' :  vacancyData.contractor_name }}</ion-card-title>
+      <ion-card-title class="title">{{ vacancyData.hide_informations ? 'Ocultado pelo contratante' :  vacancyData.contractor_name }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-header>
       <ion-card-subtitle>Cargo</ion-card-subtitle>
-      <ion-card-title>{{ vacancyData.objective }}</ion-card-title>
+      <ion-card-title class="title">{{ vacancyData.objective }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-header>
       <ion-card-subtitle>Faixa salarial</ion-card-subtitle>
-      <ion-card-title>{{ vacancyData.salary }}</ion-card-title>
+      <ion-card-title class="title">{{ vacancyData.salary }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-header>
       <ion-card-subtitle>Tipo de contratação</ion-card-subtitle>
-      <ion-card-title>{{ vacancyData.contract_type }}</ion-card-title>
+      <ion-card-title class="title">{{ vacancyData.contract_type }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-header>
       <ion-card-subtitle>Modalidade</ion-card-subtitle>
-      <ion-card-title>{{ vacancyData.modality }}</ion-card-title>
+      <ion-card-title class="title">{{ vacancyData.modality }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-header>
       <ion-card-subtitle>Localização</ion-card-subtitle>
-      <ion-card-title>{{ state?.name  || 'Carregando' }}, {{ city?.name || 'Carregando' }}, {{ vacancyData.neighborhood }}</ion-card-title>
+      <ion-card-title class="title">{{ state?.name  || 'Carregando' }}, {{ city?.name || 'Carregando' }}, {{ vacancyData.neighborhood }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-header>
@@ -63,15 +60,12 @@
       <ion-card-subtitle>Atribuições do cargo</ion-card-subtitle>
       <ion-text>{{ vacancyData.objective_assignments }}</ion-text>
     </ion-card-header>
-  </ion-card>
+  </accordion>
 
-  <ion-card>
-    <ion-item-divider color="secondary">
-      <ion-text>Requisitos</ion-text>
-    </ion-item-divider>
+  <accordion title="Requisitos">
     <ion-card-header>
       <ion-card-subtitle>Nível de Formação</ion-card-subtitle>
-      <ion-card-title>{{ vacancyData.formation }}</ion-card-title>
+      <ion-card-title class="title">{{ vacancyData.formation }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-header>
@@ -87,7 +81,7 @@
 
     <ion-card-header>
       <ion-card-subtitle>Outros requisitos de formação</ion-card-subtitle>
-      <ion-card-title>{{ vacancyData.formation_details || 'Nenhum' }}</ion-card-title>
+      <ion-card-title class="title">{{ vacancyData.formation_details || 'Nenhum' }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-header>
@@ -122,22 +116,19 @@
         <ion-text>Nenhum</ion-text>
       </ion-chip>
     </ion-card-header>
-  </ion-card>
+  </accordion>
 
-  <ion-card>
-    <ion-item-divider color="secondary">
-      <ion-text>Contato</ion-text>
-    </ion-item-divider>
+  <accordion title="Contato">
     <ion-card-header>
       <ion-card-subtitle>Email do contratante</ion-card-subtitle>
-      <ion-card-title>{{ vacancyData.contractor_email ||  'Não informado' }}</ion-card-title>
+      <ion-card-title class="title">{{ vacancyData.contractor_email ||  'Não informado' }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-header>
       <ion-card-subtitle>Telefone do contratante</ion-card-subtitle>
-      <ion-card-title>{{ vacancyData.contractor_phone || 'Não informado' }}</ion-card-title>
+      <ion-card-title class="title">{{ vacancyData.contractor_phone || 'Não informado' }}</ion-card-title>
     </ion-card-header>
-  </ion-card>
+  </accordion>
 
   <ion-button
       [disabled]="userData?.uid === vacancyData?.contractor_uid"

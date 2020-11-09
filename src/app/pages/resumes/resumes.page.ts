@@ -5,6 +5,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { SwModalComponent } from 'src/app/components/sw-modal/sw-modal.component';
+import { ResumesService } from 'src/app/services/resumes.service';
 
 @Component({
   selector: 'app-resumes',
@@ -13,23 +14,61 @@ import { SwModalComponent } from 'src/app/components/sw-modal/sw-modal.component
 })
 export class ResumesPage implements OnInit {
 
+  resumes = null
+  userData = null
+  resumesKeys = null
+  isLoading: boolean =  false
+
+  filter_value: string = 'all'
+
   constructor(
     private storage: Storage,
-    private loadingControl: LoadingController,
-    private loadingService: LoadingService,
-    private authService: AuthenticationService,
     private alert: ToastService,
-    private modalControl: ModalController
+    private modalControl: ModalController,
+    private resumesService: ResumesService
   ) {}
 
   ngOnInit() {}
 
-  async ionViewWillEnter() {
-    await this.storage.get('user_data').then(async data => {
+  ionViewWillEnter() {
+    this.isLoading =  true
+    this.storage.get('user_data').then(async data => {
+      this.userData = data
+      this.isLoading = false
       if (!data.profile_updated) {
         this.openModal('Bem vindo, você gostaria de preencher seu perfil agora?', true, data.user_type)
       }
     })
+
+    this.filterResumes(this.filter_value)
+  }
+
+  refreshResumesList(event: any) {
+    this.filterResumes(this.filter_value, event)
+  }
+
+  filterResumes(filter: string, event: any  = null) {
+    if (filter === 'all') {
+      this.resumes = null
+      this.resumesKeys = null
+      this.isLoading =  true
+      this.resumesService.getAllResumes()
+        .then(data => {
+          this.resumes = data.val()
+          this.isLoading = false
+          this.resumesKeys = Object.keys(this.resumes)
+          if (event) {
+            event.target.complete()
+          }
+        })
+        .catch(error => {
+          this.isLoading = false
+          console.log(error)
+          if (event) {
+            event.target.complete()
+          }
+        })
+    }
   }
 
   async openModal(text: string, profile_update: boolean, user_type: string) {

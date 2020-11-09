@@ -3,7 +3,7 @@
     <name>SmartWork</name>
     <description>Consiga emprego de forma fácil.</description>
     <author email="wendelllucenasi@gmail.com" href="http://ionicframework.com/">Wendell Lucena</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://localhost:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

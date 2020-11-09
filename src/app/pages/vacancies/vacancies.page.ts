@@ -32,6 +32,7 @@ export class VacanciesPage implements OnInit {
     this.isLoading = true
     this.storage.get('user_data').then(async data => {
       this.userData = data
+      this.isLoading = false
       if (!data.profile_updated) {
         this.openModal('Bem vindo, você gostaria de preencher seu perfil agora?', true, data.user_type)
       }
