@@ -4,10 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { VacancyDetailPageRoutingModule } from './vacancy-detail-routing.module';
+import { SubscriptionDetailPageRoutingModule } from './subscription-detail-routing.module';
 
-import { VacancyDetailPage } from './vacancy-detail.page';
-import { SwModalComponent } from 'src/app/components/sw-modal/sw-modal.component';
+import { SubscriptionDetailPage } from './subscription-detail.page';
 import { AccordionComponent } from 'src/app/components/accordion/accordion.component';
 import { ConfirmSubscriptionModalComponent } from 'src/app/components/confirm-subscription-modal/confirm-subscription-modal.component';
 
@@ -16,8 +15,8 @@ import { ConfirmSubscriptionModalComponent } from 'src/app/components/confirm-su
     CommonModule,
     FormsModule,
     IonicModule,
-    VacancyDetailPageRoutingModule
+    SubscriptionDetailPageRoutingModule
   ],
-  declarations: [VacancyDetailPage, SwModalComponent, AccordionComponent, ConfirmSubscriptionModalComponent]
+  declarations: [SubscriptionDetailPage, AccordionComponent, ConfirmSubscriptionModalComponent]
 })
-export class VacancyDetailPageModule {}
+export class SubscriptionDetailPageModule {}

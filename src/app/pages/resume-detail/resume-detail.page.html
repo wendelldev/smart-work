@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/resumes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalhes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="resumeData">
+
+  <accordion title="Dados de identificação">
+    <ion-card-header>
+      <ion-card-subtitle>Nome</ion-card-subtitle>
+      <ion-card-title class="title">{{ resumeData.name }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-header>
+      <ion-card-subtitle>LinkedIn</ion-card-subtitle>
+      <ion-card-title class="title">{{ resumeData.linkedInUrl || 'Não informado' }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-header>
+      <ion-card-subtitle>Data de Nascimento</ion-card-subtitle>
+      <ion-card-title class="title">{{ formatDate(resumeData.birthday) }}</ion-card-title>
+    </ion-card-header>
+  </accordion>
+
+  <accordion title="Dados de contato">
+    <ion-card-header>
+      <ion-card-subtitle>Telefone residencial</ion-card-subtitle>
+      <ion-card-title class="title">{{ resumeData.residencial_phone || 'Não possui' }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-header>
+      <ion-card-subtitle>Telefone celular</ion-card-subtitle>
+      <ion-card-title class="title">{{ resumeData.mobile_phone }}</ion-card-title>
+    </ion-card-header>
+  </accordion>
+
+  <accordion title="Dados de Moradia">
+    <ion-card-header>
+      <ion-card-subtitle>Estado</ion-card-subtitle>
+      <ion-card-title class="title">{{ state?.name }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-header>
+      <ion-card-subtitle>Cidade</ion-card-subtitle>
+      <ion-card-title class="title">{{ city?.name }}</ion-card-title>
+    </ion-card-header>
+  </accordion>
+
+  <accordion title="Dados de formação">
+    <ion-card-header>
+      <ion-card-subtitle>Escolaridade</ion-card-subtitle>
+      <ion-card-title class="title">{{ resumeData.scholarity }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-header>
+      <ion-card-subtitle>Área de atuação</ion-card-subtitle>
+      <ion-card-title class="title">{{ resumeData.name }}</ion-card-title>
+    </ion-card-header>
+  </accordion>
+
+  <accordion title="Dados profissionais">
+    <ion-card-header>
+      <ion-card-subtitle>Qualificações</ion-card-subtitle>
+      <ion-card-title class="title">{{ resumeData.qualifications }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-header>
+      <ion-card-subtitle>Experiência de trabalho</ion-card-subtitle>
+      <div class="experiences" *ngIf="resumeData.experiences.length > 0">
+        <ion-item class="styled" lines="none" *ngFor="let experience of resumeData.experiences; let i = index">
+          <ion-icon slot="start" name="business-outline"></ion-icon>
+          <ion-label class="styled">{{ experience.company_name }}</ion-label>
+        </ion-item>
+        <ion-item lines="none" *ngIf="resumeData.experiences.length === 0">
+          <ion-label color="secondary" position="stacked">Experiência de trabalho</ion-label>
+          <ion-text color="medium">Não informado</ion-text>
+        </ion-item>
+      </div>
+    </ion-card-header>
+  </accordion>
+
+  <accordion title="Carta de Apresentação">
+    <ion-card-header *ngIf="resumeData.presentation_text">
+      <ion-card-title class="title">{{ resumeData.presentation_text || 'Não informado' }}</ion-card-title>
+    </ion-card-header>
+  </accordion>
+
+</ion-content>

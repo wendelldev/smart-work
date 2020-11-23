@@ -1,0 +1,30 @@
+<ion-list>
+  <ion-radio-group [value]="filter_value" (ionChange)="onFilterChange($event)">
+    <ion-list-header>
+      <ion-label>Filtre as vagas</ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-icon slot="start" name="list-circle"></ion-icon>
+      <ion-label>Em análise</ion-label>
+      <ion-radio slot="end" value="on_hold"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon color="danger" slot="start" name="close-circle"></ion-icon>
+      <ion-text>Rejeitadas</ion-text>
+      <ion-radio slot="end" value="rejected"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon color="success" slot="start" name="checkmark-circle"></ion-icon>
+      <ion-text>Aprovados</ion-text>
+      <ion-radio slot="end" value="approved"></ion-radio>
+    </ion-item>
+  </ion-radio-group>
+
+  <ion-item button (click)="close()">
+    <ion-label>Fechar</ion-label>
+  </ion-item>
+
+</ion-list>

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ResumesPageRoutingModule } from './resumes-routing.module';
 
 import { ResumesPage } from './resumes.page';
+import { ResumeCardComponent } from 'src/app/components/resume-card/resume-card.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { ResumesPage } from './resumes.page';
     IonicModule,
     ResumesPageRoutingModule
   ],
-  declarations: [ResumesPage]
+  declarations: [ResumesPage, ResumeCardComponent]
 })
 export class ResumesPageModule {}

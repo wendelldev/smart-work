@@ -1,0 +1,23 @@
+ion-card {
+  background-color: var(--ion-color-secondary);
+  padding: 10px;
+  margin-right: 20px;
+  margin-left: 5px;
+
+}
+
+ion-item {
+  --background: var(--ion-color-secondary);
+}
+
+
+ion-text {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.sw-button {
+  margin-left: 20px;
+  margin-right: 20px;
+}

@@ -70,4 +70,9 @@ export class VacanciesService {
     return this.database.database.ref(`vacancies/${vacancyId}/subscriptions`)
       .push(candidateData)
   }
+
+  changeSubscriptionStatus(vacancyId: string, subscriptionId: string, newSub: any) {
+    return this.database.list(`vacancies/${vacancyId}/subscriptions/`)
+      .update(subscriptionId, newSub)
+  }
 }

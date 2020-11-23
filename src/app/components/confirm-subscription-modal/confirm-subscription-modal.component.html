@@ -1,0 +1,24 @@
+<ion-card>
+  <ion-item lines="none" class="ion-padding">
+    <ion-text color="light">{{ text }}</ion-text>
+  </ion-item>
+
+  <ion-button
+    class="sw-button"
+    expand="block"
+    color="light"
+    (click)="agree()"
+  >
+    Sim
+  </ion-button>
+
+  <ion-button
+    class="sw-button"
+    expand="block"
+    color="light"
+    (click)="disagree()"
+  >
+    Cancelar
+    <ion-icon slot="end" name="close-circle-outline"></ion-icon>
+  </ion-button>
+</ion-card>

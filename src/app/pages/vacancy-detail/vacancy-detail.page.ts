@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { ConfirmSubscriptionModalComponent } from 'src/app/components/confirm-subscription-modal/confirm-subscription-modal.component';
 import { SwModalComponent } from 'src/app/components/sw-modal/sw-modal.component';
 import { LoadingService } from 'src/app/services/loading.service';
 import { LocationService } from 'src/app/services/location.service';
@@ -86,6 +87,23 @@ export class VacancyDetailPage implements OnInit {
     })
     modal.onDidDismiss().then(() => {
       this.router.navigate(['/tabs/vacancies'])
+    })
+
+    modal.present()
+  }
+
+  async confirmModal() {
+    const modal = await this.modalController.create({
+      component: ConfirmSubscriptionModalComponent,
+      cssClass: 'sw-modal',
+      componentProps: {
+        "text": `Você realmente deseja se candidatar para o cargo de ${this.vacancyData.objective}?`
+      }
+    })
+    modal.onDidDismiss().then(res => {
+      if (res.data) {
+        this.subscribeToVacancy()
+      }
     })
 
     modal.present()

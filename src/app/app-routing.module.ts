@@ -54,6 +54,14 @@ const routes: Routes = [
     path: 'subscriptions',
     loadChildren: () => import('./pages/subscriptions/subscriptions.module').then( m => m.SubscriptionsPageModule)
   },
+  {
+    path: 'subscription-detail',
+    loadChildren: () => import('./pages/subscription-detail/subscription-detail.module').then( m => m.SubscriptionDetailPageModule)
+  },
+  {
+    path: 'resumes/:resumeId',
+    loadChildren: () => import('./pages/resume-detail/resume-detail.module').then( m => m.ResumeDetailPageModule)
+  },
 
 ];
 @NgModule({

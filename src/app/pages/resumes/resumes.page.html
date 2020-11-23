@@ -12,7 +12,12 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div *ngIf="!isLoading && !resumes" class="ion-text-center">
+  <resume-card
+    *ngFor="let key of resumesKeys"
+    [resume]="resumes[key]"
+  ></resume-card>
+
+  <div *ngIf="!isLoading && resumes?.length === 0" class="ion-text-center">
     <h2>Os currículos aparecerão aqui</h2>
   </div>
 

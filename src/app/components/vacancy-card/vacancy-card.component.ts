@@ -31,7 +31,7 @@ export class VacancyCardComponent implements OnInit {
   }
 
   goToSubscriptions() {
-    this.router.navigate(['/subscriptions'], { state: { subscriptions: this.subscriptions } })
+    this.router.navigate(['/subscriptions'], { state: { subscriptions: this.subscriptions, vacancyId: this.vacancy.id } })
   }
 
 }

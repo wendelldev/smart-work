@@ -28,7 +28,7 @@
     [userData]="userData"
   ></vacancy-card>
 
-  <div *ngIf="!isLoading && !vacancies" class="ion-text-center">
+  <div *ngIf="!isLoading && vacancies?.length === 0" class="ion-text-center">
     <h2>As vagas cadastrados aparecerão aqui</h2>
   </div>
 
