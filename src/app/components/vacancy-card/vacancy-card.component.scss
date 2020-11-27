@@ -21,6 +21,10 @@ ion-card-content {
       margin-right: 8px;
       color: var(--ion-color-dark)
     }
+
+    ion-icon[name=cash] {
+      color: green;
+    }
   }
 }
 
