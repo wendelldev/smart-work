@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Notificações</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <notification-card *ngFor="let key of notificationsKeys"
+    [notification]='notifications[key]'
+  ></notification-card>
+
+  <div *ngIf="!isLoading && notifications?.length === 0" class="ion-text-center">
+    <h2>As notificações aparecerão aqui</h2>
+  </div>
+
+  <div class="spinner">
+    <ion-spinner *ngIf="isLoading" name="lines"></ion-spinner>
+  </div>
+</ion-content>

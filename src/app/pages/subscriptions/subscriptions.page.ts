@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoadingController, PopoverController } from '@ionic/angular';
+import { LoadingController, ModalController, PopoverController } from '@ionic/angular';
 import { FilterSubscriptionsPopoverComponent } from 'src/app/components/filter-subscriptions-popover/filter-subscriptions-popover.component';
+import { InterviewModalComponent } from 'src/app/components/interview-modal/interview-modal.component';
 import { LoadingService } from 'src/app/services/loading.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { ToastService } from 'src/app/services/toast.service';
+import { VacanciesService } from 'src/app/services/vacancies.service';
 
 @Component({
   selector: 'app-subscriptions',
@@ -29,7 +33,10 @@ export class SubscriptionsPage implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private modalController: ModalController,
+    private notificationsService: NotificationsService,
+    private toastService: ToastService
   ) {
     this.isLoading = true
     this.activatedRoute.queryParams.subscribe(async params => {
@@ -100,6 +107,22 @@ export class SubscriptionsPage implements OnInit {
     })
 
     await popover.present()
+  }
+
+  async showInterview() {
+    const modal = await this.modalController.create({
+      component: InterviewModalComponent,
+      cssClass: 'interview-modal'
+    })
+
+    modal.onDidDismiss().then(res => {
+      if (res.data) {
+        this.notificationsService.sendInterviewNotification(res.data, this.subscriptions, this.subscriptionsKeys)
+        this.toastService.presentToast('Notificação enviada pra todos os candidatos aprovados')
+      }
+    })
+
+    modal.present()
   }
 
 }

@@ -1,5 +1,11 @@
 <ion-header>
   <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="['/notifications']">
+        <ion-icon slot="start" name="notifications"></ion-icon>
+        <ion-badge *ngIf="notificationsKeys" color="danger">{{notificationsKeys.length}}</ion-badge>
+      </ion-button>
+    </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="presentPopover($event)">
         <ion-icon name="filter" slot="icon-only"></ion-icon>

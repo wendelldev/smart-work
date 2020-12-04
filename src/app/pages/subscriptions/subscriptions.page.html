@@ -13,6 +13,13 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-fab *ngIf="filter_value === 'approved'" vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button color="danger" (click)="showInterview()">
+      <ion-icon name="megaphone-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <ion-text color="primary">
     <h2>{{list_reference}}</h2>
   </ion-text>

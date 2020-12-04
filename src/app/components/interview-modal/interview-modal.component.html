@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title>Marcar entrevista</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+   
+  <ion-card-header>
+    <ion-card-subtitle>Envie uma notificação com os dados da entrevista para todos os candidatos aprovados.</ion-card-subtitle>
+  </ion-card-header>
+
+  <form class="sw-form" [formGroup]="infoForm" novalidate>
+
+    <ion-item lines="none">
+      <ion-icon slot="start" name="calendar-outline"></ion-icon>
+      <ion-datetime formControlName="date" displayFormat="DD/MM/YYYY" placeholder="Data"></ion-datetime>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-icon slot="start" name="calendar-outline"></ion-icon>
+      <ion-datetime formControlName="time" displayFormat="h:mm A" picker-format="h:mm A" placeholder="Horário"></ion-datetime>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-icon slot="start" name="location"></ion-icon>
+      <ion-textarea formControlName="location" rows="4" autoGrow="true" placeholder="Localização"></ion-textarea>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-icon slot="start" name="list-circle"></ion-icon>
+      <ion-textarea formControlName="observation" rows="4" autoGrow="true" placeholder="Observação"></ion-textarea>
+    </ion-item>
+
+  </form>
+
+  <ion-button
+    [disabled]="infoForm.invalid"
+    class="sw-button"
+    expand="block"
+    color="secondary"
+    (click)="sendNotification()"
+  >
+    Enviar
+    <ion-icon slot="end" name="arrow-forward-circle-outline"></ion-icon>
+  </ion-button>
+
+  <ion-button
+    class="sw-button"
+    expand="block"
+    color="danger"
+    (click)="dismiss()"
+  >
+    Cancelar
+    <ion-icon slot="end" name="close-circle-outline"></ion-icon>
+  </ion-button>
+
+</ion-content>

@@ -1,0 +1,29 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Entrevista</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <div class="content">
+      <ion-item lines="none">
+        <ion-icon color="tertiary" name="briefcase" slot="start"></ion-icon>
+        <ion-text class="objective">{{notification.vacancy.objective}}</ion-text>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon color="danger" name="location" slot="start"></ion-icon>
+        <ion-text color="medium">{{ notification.location }}</ion-text>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon name="calendar" slot="start"></ion-icon>
+        <ion-text color="medium">Dia: {{ formatDate(notification.date) }} às {{ formatTime(notification.time) }}</ion-text>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon color="danger" name="list-circle" slot="start"></ion-icon>
+        <ion-text color="medium">{{ notification.observation }}</ion-text>
+      </ion-item>
+
+    </div>
+  </ion-card-content>
+</ion-card>

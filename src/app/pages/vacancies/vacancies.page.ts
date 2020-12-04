@@ -3,6 +3,8 @@ import { ModalController, PopoverController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { FilterPopoverComponent } from 'src/app/components/filter-popover/filter-popover.component';
 import { SwModalComponent } from 'src/app/components/sw-modal/sw-modal.component';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { VacanciesService } from 'src/app/services/vacancies.service';
 
 @Component({
@@ -19,11 +21,16 @@ export class VacanciesPage implements OnInit {
 
   filter_value: string = 'all'
 
+  notifications = null
+  notificationsKeys = null
+
   constructor(
     private storage: Storage,
     private modalControl: ModalController,
     private vacanciesService: VacanciesService,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private notificationsService: NotificationsService,
+    private toast: ToastService
   ) {}
 
   ngOnInit() {}
@@ -32,17 +39,31 @@ export class VacanciesPage implements OnInit {
     this.isLoading = true
     this.storage.get('user_data').then(async data => {
       this.userData = data
+      this.refreshNotifications()
       this.isLoading = false
       if (!data.profile_updated) {
         this.openModal('Bem vindo, você gostaria de preencher seu perfil agora?', true, data.user_type)
       }
     })
-    
     this.filterVacancies(this.filter_value)
   }
 
   refreshVacanciesList(event: any) {
       this.filterVacancies(this.filter_value, event)
+  }
+
+  refreshNotifications() {
+    this.notificationsService.getNotifications(this.userData.uid)
+      .then(data => {
+        if (data.val()) {
+          this.notifications = data.val()
+          this.notificationsKeys = Object.keys(this.notifications)
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        this.toast.presentToast(error.message, 'bottom', 'danger')
+      })
   }
 
   filterVacancies(filter: string, ev: any = null) {
@@ -62,7 +83,7 @@ export class VacanciesPage implements OnInit {
       })
       .catch(error => {
         this.isLoading = false
-        console.log(error)
+        this.toast.presentToast(error.message, 'bottom', 'danger')
         if (ev) {
           ev.target.complete()
         }
@@ -82,7 +103,7 @@ export class VacanciesPage implements OnInit {
         })
         .catch(error => {
           this.isLoading = false
-          console.log(error)
+          this.toast.presentToast(error.message, 'bottom', 'danger')
           if (ev) {
             ev.target.complete()
           }

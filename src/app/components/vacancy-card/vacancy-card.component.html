@@ -1,13 +1,14 @@
 <ion-card>
+
   <ion-card-content>
     <div class="content">
       <ion-item lines="none">
         <ion-icon color="tertiary" name="briefcase" slot="start"></ion-icon>
-        <ion-text color="dark">{{vacancy.objective}}</ion-text>
+        <ion-text class="objective">{{vacancy.objective}}</ion-text>
       </ion-item>
 
       <ion-item lines="none" *ngIf="!vacancy.hide_informations">
-        <ion-icon name="business" slot="start"></ion-icon>
+        <ion-icon color="tertiary" name="business" slot="start"></ion-icon>
         <ion-text color="medium">{{ vacancy.contractor_name }}</ion-text>
       </ion-item>
 
@@ -26,7 +27,7 @@
 
       <ion-icon color="warning" name="star-outline"></ion-icon>
 
-      <ion-icon name="information-circle" (click)="goToVacancyDetail()"></ion-icon>
+      <ion-icon color="secondary" name="information-circle" (click)="goToVacancyDetail()"></ion-icon>
 
       <ion-button
         (click)="goToSubscriptions()"

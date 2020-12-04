@@ -1,6 +1,8 @@
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database'
+import { Storage } from '@ionic/storage';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -10,7 +12,8 @@ export class AuthenticationService {
 
   constructor(
     private angularFireAuth: AngularFireAuth,
-    private database: AngularFireDatabase
+    private database: AngularFireDatabase,
+    private storage: Storage
   ) { }
 
   SignIn(email: string, password: string) {
@@ -46,6 +49,20 @@ export class AuthenticationService {
           user_type: userType
         })
     }
+  }
+
+  async isAuthenticated(): Promise<boolean> {
+    const user = await this.storage.get('user_data')
+    return !!user
+  }
+
+  logout() {
+    return this.angularFireAuth.signOut()
+  }
+
+  removeUserDataFromStorage() {
+    this.storage.remove('user_data')
+    this.storage.remove('user_type')
   }
 
   updateUserData(userId: string, userType: string, data: any) {
