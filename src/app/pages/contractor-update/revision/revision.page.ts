@@ -58,6 +58,7 @@ export class RevisionPage implements OnInit {
     this.userData.profile_updated = true
     this.authService.updateUserData(this.userData.uid, this.userData.user_type, this.userData)
       .then(async res => {
+        this.localStorage.set('user_data', this.userData)
         await this.loadingControl.dismiss()
         this.router.navigate(['/tabs/contractor-profile'])
         this.alert.presentToast('Contratante atualizado com sucesso.')
