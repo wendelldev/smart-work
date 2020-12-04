@@ -4,6 +4,26 @@
   font-weight: normal;
 }
 
+.avatar-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+ion-avatar {
+  width: 120px;
+  height: 120px;
+  background: var(--ion-color-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ion-icon {
+      color: var(--ion-color-dark);
+      font-size: 50px;
+  }
+}
+
 ion-content {
   --padding-start: 15px;
   --padding-end: 15px;

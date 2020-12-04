@@ -8,6 +8,11 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="refreshProfile($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-card *ngIf="userData">
     <ion-card-header>
       <ion-avatar>

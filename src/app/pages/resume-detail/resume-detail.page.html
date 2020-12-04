@@ -9,10 +9,22 @@
 
 <ion-content *ngIf="resumeData">
 
+  <ion-card-header class="avatar-header">
+    <ion-avatar>
+      <ion-icon *ngIf="!resumeData.avatar_url" name="person-outline"></ion-icon>
+      <img *ngIf="resumeData.avatar_url" [src]="resumeData.avatar_url">
+    </ion-avatar>
+  </ion-card-header>
+
   <accordion title="Dados de identificação">
     <ion-card-header>
       <ion-card-subtitle>Nome</ion-card-subtitle>
       <ion-card-title class="title">{{ resumeData.name }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-header>
+      <ion-card-subtitle>Email</ion-card-subtitle>
+      <ion-card-title class="title">{{ resumeData.email }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-header>
@@ -70,12 +82,12 @@
 
     <ion-card-header>
       <ion-card-subtitle>Experiência de trabalho</ion-card-subtitle>
-      <div class="experiences" *ngIf="resumeData.experiences.length > 0">
+      <div class="experiences" *ngIf="resumeData.experiences?.length > 0">
         <ion-item class="styled" lines="none" *ngFor="let experience of resumeData.experiences; let i = index">
           <ion-icon slot="start" name="business-outline"></ion-icon>
           <ion-label class="styled">{{ experience.company_name }}</ion-label>
         </ion-item>
-        <ion-item lines="none" *ngIf="resumeData.experiences.length === 0">
+        <ion-item lines="none" *ngIf="resumeData.experiences?.length === 0">
           <ion-label color="secondary" position="stacked">Experiência de trabalho</ion-label>
           <ion-text color="medium">Não informado</ion-text>
         </ion-item>

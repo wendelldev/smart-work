@@ -54,9 +54,13 @@ export class ResumesPage implements OnInit {
       this.isLoading =  true
       this.resumesService.getAllResumes()
         .then(data => {
-          this.resumes = data.val()
-          this.isLoading = false
-          this.resumesKeys = Object.keys(this.resumes)
+          if (data.val()) {
+            this.resumes = data.val()
+            this.isLoading = false
+            this.resumesKeys = Object.keys(this.resumes)
+          } else {
+            this.alert.presentToast('Não há currículos cadastrados', 'bottom', 'danger')
+          }
           if (event) {
             event.target.complete()
           }

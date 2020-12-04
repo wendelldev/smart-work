@@ -73,10 +73,14 @@ export class VacanciesPage implements OnInit {
       this.isLoading = true
       this.vacanciesService.getAllVacancies()
       .then(data => {
-        this.vacanciesService.addVacanciesToStorage(data.val())
-        this.vacancies = data.val()
-        this.isLoading = false
-        this.keys = Object.keys(this.vacancies)
+        if (data.val()) {
+          this.vacanciesService.addVacanciesToStorage(data.val())
+          this.vacancies = data.val()
+          this.isLoading = false
+          this.keys = Object.keys(this.vacancies)
+        } else {
+          this.toast.presentToast('Não há vagas cadastradas', 'bottom', 'danger')
+        }
         if (ev) {
           ev.target.complete()
         }

@@ -46,6 +46,21 @@ export class ContractorProfilePage implements OnInit {
     })
   }
 
+  refreshProfile(event: any) {
+    this.authService.getUserData(this.userData.uid, 'contractors')
+      .then(data => {
+        if (data.val()) {
+          this.userData = data.val()
+          this.storage.set('user_data', data.val())
+        }
+        event.target.complete()
+      })
+      .catch(error => {
+        this.alert.presentToast(error.message, 'bottom', 'danger')
+        event.target.complete()
+      })
+  }
+
   formatDate(dateTime: string) {
     moment.locale('pt-br')
     let time = moment(dateTime).format('DD/MM/YYYY')

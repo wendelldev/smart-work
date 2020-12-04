@@ -17,8 +17,8 @@
     [resume]="resumes[key]"
   ></resume-card>
 
-  <div *ngIf="!isLoading && resumes?.length === 0" class="ion-text-center">
-    <h2>Os currículos aparecerão aqui</h2>
+  <div *ngIf="!isLoading && !resumes" class="ion-text-center">
+    <h2 class="text-empty">Os currículos aparecerão aqui</h2>
   </div>
 
   <div class="spinner">

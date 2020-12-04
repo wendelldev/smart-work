@@ -110,14 +110,14 @@ export class LoginPage implements AfterViewInit {
               this.storage.set('user_type', res.val().user_type)
               this.storage.set('user_data', res.val())
               this.loadingControl.dismiss()
-              this.router.navigate(['/tabs/vacancies'])
+              this.router.navigate(['/tabs/vacancies'], { replaceUrl: true })
             } else {
               this.authService.getUserData(response.user.uid, 'contractors').then(res => {
                 if (res.val()) {
                   this.storage.set('user_type', res.val().user_type)
                   this.storage.set('user_data', res.val())
                   this.loadingControl.dismiss()
-                  this.router.navigate(['/tabs/resumes'])
+                  this.router.navigate(['/tabs/resumes'], { replaceUrl: true })
                 }
               })
               .catch(async error => {
